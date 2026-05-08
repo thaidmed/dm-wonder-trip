@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DM Wonder Trip — Diabetes Education Board Game</title>
-<meta name="description" content="An interactive diabetes education board game for Type 1 Diabetes patients, families, and medical teams. Developed based on Siriraj Hospital research.">
+<meta name="description" content="An interactive diabetes education board game for Type 1 Diabetes patients, families, and medical teams.">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --teal:#1D9E75;--teal-d:#085041;--teal-l:#E1F5EE;
@@ -18,71 +18,78 @@
   --red:#E24B4A;--red-d:#791F1F;--red-l:#FCEBEB;
   --bg:#F8F7F3;--surface:#ffffff;--border:#E5E4DF;
   --text:#1A1A18;--text2:#5F5E5A;--text3:#888780;
-  --radius:10px;--radius-lg:14px;--radius-xl:18px;
+  --r:10px;--rl:14px;--rxl:18px;
+  --tile:44px;
 }
-body{font-family:'Nunito',sans-serif;background:var(--bg);min-height:100vh;color:var(--text)}
-.wrap{max-width:820px;margin:0 auto;padding:12px 14px}
-.header{text-align:center;padding:14px 0 8px}
-.header h1{font-size:24px;font-weight:800;color:var(--teal-d);letter-spacing:-.5px}
-.header p{font-size:12px;color:var(--text2);margin-top:3px}
-.lang-row{display:flex;justify-content:center;gap:6px;margin-bottom:12px}
-.lb{padding:4px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--text2);transition:all .15s}
+body{font-family:'Prompt',sans-serif;background:var(--bg);min-height:100vh;color:var(--text)}
+.wrap{max-width:860px;margin:0 auto;padding:10px 12px}
+.header{text-align:center;padding:12px 0 6px}
+.header h1{font-size:22px;font-weight:800;color:var(--teal-d)}
+.header p{font-size:11px;color:var(--text2);margin-top:2px}
+.lang-row{display:flex;justify-content:center;gap:6px;margin-bottom:10px}
+.lb{padding:3px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:12px;font-weight:600;cursor:pointer;font-family:'Prompt',sans-serif;color:var(--text2);transition:all .15s}
 .lb.on{background:var(--teal);color:#fff;border-color:var(--teal)}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px}
-.st{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:8px}
-.btn{background:var(--teal);color:#fff;border:none;border-radius:var(--radius);padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:12px}
+.st{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:8px}
+.btn{background:var(--teal);color:#fff;border:none;border-radius:var(--r);padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Prompt',sans-serif;transition:all .15s}
 .btn:hover{background:var(--teal-d)}
 .btn:disabled{background:#D3D1C7;color:var(--text3);cursor:default}
-.btng{background:#F1EFE8;color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
+.btng{background:#F1EFE8;color:var(--text);border:1px solid var(--border);border-radius:var(--r);padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Prompt',sans-serif}
 .btng:hover{background:#E5E4DF}
-.ptag{display:inline-flex;align-items:center;padding:6px 14px;border-radius:var(--radius);border:1.5px solid;font-size:13px;font-weight:700;cursor:pointer;transition:all .12s}
-.phase-bar{display:flex;gap:4px;margin-bottom:10px}
-.ph{flex:1;padding:6px 4px;border-radius:var(--radius);font-size:10px;font-weight:700;text-align:center;border:1px solid var(--border);color:var(--text3);background:#F1EFE8;transition:all .2s}
+.ptag{display:inline-flex;align-items:center;padding:5px 12px;border-radius:var(--r);border:1.5px solid;font-size:13px;font-weight:600;cursor:pointer;transition:all .12s}
+.phase-bar{display:flex;gap:4px;margin-bottom:8px}
+.ph{flex:1;padding:5px 4px;border-radius:var(--r);font-size:10px;font-weight:600;text-align:center;border:1px solid var(--border);color:var(--text3);background:#F1EFE8;transition:all .2s}
 .ph.active{background:var(--teal);color:#fff;border-color:var(--teal)}
 .ph.done{background:var(--green-l);color:var(--green-d);border-color:var(--green)}
-.game-grid{display:grid;grid-template-columns:1fr 210px;gap:10px}
+.game-grid{display:grid;grid-template-columns:1fr 200px;gap:10px}
 .sidebar{display:flex;flex-direction:column;gap:8px}
-.scoreboard{display:flex;flex-direction:column;gap:5px}
-.srow{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:var(--radius);background:#F1EFE8;transition:all .2s}
+.scoreboard{display:flex;flex-direction:column;gap:4px}
+.srow{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:var(--r);background:#F1EFE8;transition:all .2s}
 .srow.cur{border:1.5px solid}
 .sdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.sname{font-size:12px;font-weight:700;flex:1}
-.spts{font-size:12px;font-weight:800;color:var(--text2)}
-.die{width:42px;height:42px;border-radius:var(--radius);background:#F1EFE8;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;transition:all .2s}
-.die.spin{animation:sp .45s ease}
-@keyframes sp{0%,100%{transform:rotate(0)}33%{transform:rotate(-20deg)}66%{transform:rotate(20deg)}}
-.rbtn{width:100%;padding:10px;border-radius:var(--radius);background:var(--teal);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
+.sname{font-size:12px;font-weight:600;flex:1}
+.spts{font-size:12px;font-weight:700;color:var(--text2)}
+.die{width:40px;height:40px;border-radius:var(--r);background:#F1EFE8;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;transition:all .2s}
+.die.spin{animation:sp .4s ease}
+@keyframes sp{0%,100%{transform:rotate(0)}33%{transform:rotate(-18deg)}66%{transform:rotate(18deg)}}
+.rbtn{width:100%;padding:9px;border-radius:var(--r);background:var(--teal);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:'Prompt',sans-serif;transition:all .15s}
 .rbtn:hover{background:var(--teal-d)}
 .rbtn:disabled{background:#D3D1C7;color:var(--text3);cursor:default}
-.turn-pill{padding:8px 12px;border-radius:var(--radius);font-size:13px;font-weight:700;text-align:center;transition:all .2s}
-.sinfo{padding:9px 10px;border-radius:var(--radius);background:#F1EFE8;font-size:11px;line-height:1.6;min-height:44px;color:var(--text)}
-.modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:999;padding:14px}
-.modal{background:var(--surface);border-radius:var(--radius-xl);max-width:460px;width:100%;padding:20px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
-.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
-.mq{font-size:15px;font-weight:700;line-height:1.45;margin-bottom:12px;color:var(--text)}
+.turn-pill{padding:7px 10px;border-radius:var(--r);font-size:12px;font-weight:700;text-align:center}
+.sinfo{padding:8px 10px;border-radius:var(--r);background:#F1EFE8;font-size:11px;line-height:1.6;min-height:42px;color:var(--text)}
+.modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:999;padding:12px}
+.modal{background:var(--surface);border-radius:var(--rxl);max-width:460px;width:100%;padding:20px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.mq{font-size:15px;font-weight:600;line-height:1.45;margin-bottom:12px;color:var(--text)}
 .choices{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-.ch{padding:10px 13px;border-radius:var(--radius);border:1px solid var(--border);background:#F1EFE8;font-size:13px;font-weight:600;cursor:pointer;text-align:left;font-family:'Nunito',sans-serif;color:var(--text);transition:all .12s}
+.ch{padding:9px 12px;border-radius:var(--r);border:1px solid var(--border);background:#F1EFE8;font-size:13px;font-weight:500;cursor:pointer;text-align:left;font-family:'Prompt',sans-serif;color:var(--text);transition:all .12s}
 .ch:hover:not(:disabled){border-color:var(--teal);background:var(--teal-l)}
 .ch.ok{background:var(--green-l);border-color:var(--green);color:var(--green-d)}
 .ch.no{background:var(--red-l);border-color:var(--red);color:var(--red-d)}
-.explain-box{background:var(--teal-l);border-radius:var(--radius);border-left:3px solid var(--teal);padding:10px 13px;font-size:12px;line-height:1.7;color:var(--teal-d);margin-bottom:12px}
-.pt-box{background:var(--amber-l);border-radius:var(--radius);padding:10px 13px;margin-bottom:12px;border:1px solid #EF9F27}
-.pt-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--amber-d);margin-bottom:7px}
-.pt-step{display:flex;gap:8px;align-items:flex-start;margin-bottom:5px}
-.snum{min-width:19px;height:19px;border-radius:50%;background:var(--amber);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.explain-box{background:var(--teal-l);border-radius:var(--r);border-left:3px solid var(--teal);padding:10px 12px;font-size:12px;line-height:1.7;color:var(--teal-d);margin-bottom:12px}
+.pt-box{background:var(--amber-l);border-radius:var(--r);padding:10px 12px;margin-bottom:12px;border:1px solid #EF9F27}
+.pt-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--amber-d);margin-bottom:6px}
+.pt-step{display:flex;gap:7px;align-items:flex-start;margin-bottom:4px}
+.snum{min-width:18px;height:18px;border-radius:50%;background:var(--amber);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
 .pt-text{font-size:11px;color:var(--amber-d);line-height:1.5}
-.gift-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px;border-radius:var(--radius-lg);border:1.5px solid var(--border);margin-bottom:14px;cursor:pointer;transition:all .2s;background:#F1EFE8}
+.gift-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px;border-radius:var(--rl);border:1.5px solid var(--border);margin-bottom:14px;cursor:pointer;transition:all .2s;background:#F1EFE8}
 .gift-card:hover{border-color:var(--teal);background:var(--teal-l)}
 .mfooter{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:10px}
 .hidden{display:none!important}
-.rules-section{margin-top:10px;padding:10px 12px;background:var(--amber-l);border-radius:var(--radius);border:1px solid #EF9F27}
-.rules-section .rt{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--amber-d);margin-bottom:4px}
-.rules-section .rb{font-size:11px;color:var(--amber-d);line-height:1.7}
-footer{text-align:center;padding:16px;font-size:11px;color:var(--text3);margin-top:8px}
+.rules-section{margin-top:10px;padding:10px 12px;background:var(--amber-l);border-radius:var(--r);border:1px solid #EF9F27}
+/* Board canvas wrapper */
+#board-wrap{position:relative;width:100%;overflow:hidden;border-radius:var(--r)}
+#board-canvas{display:block;width:100%;image-rendering:auto}
+/* SVG token layer on top of canvas */
+#token-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+/* Walking animation */
+.tok-circle{transition:cx 0.15s cubic-bezier(.4,0,.2,1), cy 0.15s cubic-bezier(.4,0,.2,1)}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.tok-bouncing{animation:bounce 0.25s ease}
+footer{text-align:center;padding:14px;font-size:11px;color:var(--text3);margin-top:6px}
 </style>
 </head>
 <body>
-
 <div class="wrap">
   <div class="header">
     <h1>🩺 DM Wonder Trip</h1>
@@ -93,10 +100,11 @@ footer{text-align:center;padding:16px;font-size:11px;color:var(--text3);margin-t
     <button class="lb" onclick="setL('th',this)">ภาษาไทย</button>
   </div>
 
+  <!-- SETUP SCREEN -->
   <div id="sscreen">
     <div class="card" style="margin-bottom:10px">
       <div class="st" id="lpl">Number of players</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px">
         <div class="ptag" onclick="selP(2,this)" id="p2" style="border-color:#1D9E75;color:#1D9E75;background:#E1F5EE">2 players</div>
         <div class="ptag" onclick="selP(3,this)" id="p3" style="border-color:#378ADD;color:#378ADD">3 players</div>
         <div class="ptag" onclick="selP(4,this)" id="p4" style="border-color:#D85A30;color:#D85A30">4 players</div>
@@ -106,22 +114,23 @@ footer{text-align:center;padding:16px;font-size:11px;color:var(--text3);margin-t
     </div>
     <div class="card">
       <div class="st" id="lhow">How to play</div>
-      <div style="font-size:13px;line-height:1.9;color:var(--text)" id="rules-body">
-        <b style="color:#1D9E75">Phase 1 — Roll & Action card:</b> Roll 2 dice and move your token along the winding road. Draw an action card — read it aloud and discuss with everyone before the explanation reveals.<br>
-        <b style="color:#7F77DD">Phase 2 — Question card:</b> Answer a diabetes question. A full clinical explanation always appears after your answer — right or wrong.<br>
-        <b style="color:#BA7517">Phase 3 — Gift draw:</b> Answer correctly and flip a mystery gift card to reveal your points. Fortune cards add surprise twists!<br>
-        The player with the most points when someone reaches Home wins!
+      <div style="font-size:12px;line-height:1.9;color:var(--text)" id="rules-body">
+        <b style="color:#1D9E75">Phase 1 — Roll &amp; Action card:</b> Roll 2 dice, watch your token walk tile by tile. Draw an action card — read aloud, discuss, then the explanation reveals.<br>
+        <b style="color:#7F77DD">Phase 2 — Question card:</b> Answer a diabetes question. Full explanation always shows after — right or wrong.<br>
+        <b style="color:#BA7517">Phase 3 — Gift draw:</b> Answer correctly and flip a mystery gift card to reveal your points!<br>
+        Most points when someone reaches Home wins!
       </div>
-      <div class="rules-section" style="margin-top:10px">
-        <div class="rt" id="krule-t">Knowledge card rule</div>
-        <div class="rb" id="krule-b">When an action card is drawn: (1) Player reads it aloud to everyone. (2) Player explains in their own words. (3) Others add or correct. (4) Facilitator or guidebook gives the full explanation — already shown on screen.</div>
+      <div class="rules-section">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--amber-d);margin-bottom:4px" id="krule-t">Knowledge card rule</div>
+        <div style="font-size:11px;color:var(--amber-d);line-height:1.7" id="krule-b">When an action card is drawn: (1) Player reads aloud. (2) Explains in own words. (3) Others add/correct. (4) Facilitator or guidebook explains fully — shown on screen.</div>
       </div>
-    </div>
-    <div style="margin-top:10px;text-align:center">
-      <a href="https://www.notion.so/DM-Board-Game-3526646c3e8480f09f39dfdf6ac3a92f" target="_blank" style="font-size:12px;color:var(--teal);font-weight:700;text-decoration:none">📖 Open full guidebook (Notion) →</a>
+      <div style="margin-top:10px;text-align:center">
+        <a href="https://www.notion.so/DM-Board-Game-3526646c3e8480f09f39dfdf6ac3a92f" target="_blank" style="font-size:12px;color:var(--teal);font-weight:600;text-decoration:none">📖 Full Guidebook (Notion) →</a>
+      </div>
     </div>
   </div>
 
+  <!-- GAME SCREEN -->
   <div id="gscreen" class="hidden">
     <div class="game-grid">
       <div style="display:flex;flex-direction:column;gap:8px">
@@ -131,7 +140,10 @@ footer{text-align:center;padding:16px;font-size:11px;color:var(--text3);margin-t
             <div class="ph" id="ph2">2. Question</div>
             <div class="ph" id="ph3">3. Gift</div>
           </div>
-          <svg id="bsvg" viewBox="0 0 520 340" width="100%" style="display:block"></svg>
+          <div id="board-wrap">
+            <canvas id="board-canvas"></canvas>
+            <svg id="token-svg" viewBox="0 0 0 0"></svg>
+          </div>
         </div>
         <div class="card" style="padding:10px">
           <div class="st" id="lact">What to do now</div>
@@ -149,11 +161,11 @@ footer{text-align:center;padding:16px;font-size:11px;color:var(--text3);margin-t
         </div>
         <div class="card" style="padding:10px">
           <div class="st" id="ldice">Roll dice</div>
-          <div style="display:flex;gap:8px;justify-content:center;margin-bottom:5px">
+          <div style="display:flex;gap:8px;justify-content:center;margin-bottom:4px">
             <div class="die" id="d1">⚀</div>
             <div class="die" id="d2">⚀</div>
           </div>
-          <div style="text-align:center;font-size:11px;color:var(--text3);margin-bottom:6px" id="dtot">Total: 2</div>
+          <div style="text-align:center;font-size:11px;color:var(--text3);margin-bottom:5px" id="dtot">Total: 2</div>
           <button class="rbtn" id="rollbtn" onclick="rollDice()">🎲 Roll!</button>
         </div>
         <button class="btng" onclick="resetGame()" style="width:100%;font-size:12px" id="lreset">↩ New game</button>
@@ -161,30 +173,281 @@ footer{text-align:center;padding:16px;font-size:11px;color:var(--text3);margin-t
     </div>
   </div>
 </div>
-
 <div id="mc"></div>
-
 <footer>
-  DM Wonder Trip — based on research by Leelapreechalert et al., Siriraj Hospital, Mahidol University (2017)<br>
+  DM Wonder Trip v5 — based on research by Leelapreechalert et al., Siriraj Hospital, Mahidol University (2017)<br>
   <a href="https://www.notion.so/DM-Board-Game-3526646c3e8480f09f39dfdf6ac3a92f" target="_blank" style="color:var(--teal)">📖 Full Guidebook</a>
 </footer>
 
 <script>
-const TX={
+// ─── CONSTANTS ────────────────────────────────────────────────
+const TOTAL = 81;
+const COLS = 9;
+const ROWS = 9;
+const TILE = 44; // px per tile on canvas
+const PAD = 10;
+const CW = COLS * TILE + PAD * 2;
+const CH = ROWS * TILE + PAD * 2;
+
+const PCOLS = ["#1D9E75","#378ADD","#D85A30","#7F77DD","#BA7517"];
+const PBGS  = ["#E1F5EE","#E6F1FB","#FAECE7","#EEEDFE","#FAEEDA"];
+const PEN   = ["Player 1","Player 2","Player 3","Player 4","Player 5"];
+const PTH   = ["ผู้เล่น 1","ผู้เล่น 2","ผู้เล่น 3","ผู้เล่น 4","ผู้เล่น 5"];
+const DF    = ["⚀","⚁","⚂","⚃","⚄","⚅"];
+
+// token offset so multiple players on same tile don't overlap
+const TOK_OFF = [{dx:-9,dy:-9},{dx:9,dy:-9},{dx:-9,dy:9},{dx:9,dy:9},{dx:0,dy:-12}];
+
+// ─── TILE COORDINATE SYSTEM ───────────────────────────────────
+// Bottom-left = index 0 (Start), top-left = index 80 (Home)
+// Rows go from bottom (row 0) to top (row 8)
+// Even rows → left to right; odd rows → right to left (zigzag)
+function tileXY(idx) {
+  const row = Math.floor(idx / COLS);           // 0 = bottom
+  const col_in_row = idx % COLS;
+  const col = (row % 2 === 0) ? col_in_row : (COLS - 1 - col_in_row);
+  const svgRow = (ROWS - 1) - row;              // flip: row 0 → bottom of SVG
+  const cx = PAD + col * TILE + TILE / 2;
+  const cy = PAD + svgRow * TILE + TILE / 2;
+  return { cx, cy };
+}
+
+// ─── SPACE TYPE GENERATION ────────────────────────────────────
+let STYPES = [];
+function genST() {
+  STYPES = [];
+  for (let i = 0; i < TOTAL; i++) {
+    if (i === 0)          STYPES.push('S');
+    else if (i === TOTAL-1) STYPES.push('F');
+    else                  STYPES.push(Math.random() < 0.65 ? 'A' : 'E');
+  }
+}
+
+// ─── BOARD DRAWING (Canvas) ───────────────────────────────────
+const FILL = { S:'#1D9E75', F:'#D85A30', A:'#378ADD', E:'#BA7517' };
+const STRK = { S:'#085041', F:'#712B13', A:'#0C447C', E:'#633806' };
+
+function drawBoard() {
+  const canvas = document.getElementById('board-canvas');
+  canvas.width  = CW;
+  canvas.height = CH;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, CW, CH);
+
+  // background
+  ctx.fillStyle = '#F8F7F3';
+  ctx.fillRect(0, 0, CW, CH);
+
+  // draw connector lines
+  ctx.setLineDash([3, 3]);
+  ctx.strokeStyle = '#D3D1C7';
+  ctx.lineWidth = 1.5;
+  for (let i = 0; i < TOTAL - 1; i++) {
+    const a = tileXY(i), b = tileXY(i + 1);
+    ctx.beginPath(); ctx.moveTo(a.cx, a.cy); ctx.lineTo(b.cx, b.cy); ctx.stroke();
+  }
+  ctx.setLineDash([]);
+
+  // draw tiles
+  ctx.font = "bold 9px 'Prompt', sans-serif";
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (let i = 0; i < TOTAL; i++) {
+    const st = STYPES[i];
+    const { cx, cy } = tileXY(i);
+    const r = (st === 'S' || st === 'F') ? 16 : 12;
+    // shadow
+    ctx.shadowColor = 'rgba(0,0,0,0.12)';
+    ctx.shadowBlur = 4;
+    ctx.shadowOffsetY = 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = FILL[st];
+    ctx.fill();
+    ctx.shadowColor = 'transparent';
+    ctx.strokeStyle = STRK[st];
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    // label
+    ctx.fillStyle = '#fff';
+    const lbl = st === 'S' ? 'S' : st === 'F' ? 'F' : st === 'A' ? 'A' : '!';
+    ctx.font = `bold ${st === 'S' || st === 'F' ? 10 : 8}px 'Prompt', sans-serif`;
+    ctx.fillText(lbl, cx, cy);
+    // sub label
+    if (st === 'S' || st === 'F') {
+      ctx.fillStyle = '#5F5E5A';
+      ctx.font = "7px 'Prompt', sans-serif";
+      ctx.fillText(st === 'S' ? 'Start' : 'Home', cx, cy + 22);
+    }
+  }
+
+  // legend
+  const leg = [{c:'#378ADD',l:'A = Action'},{c:'#BA7517',l:'! = Event'},{c:'#1D9E75',l:'Start'},{c:'#D85A30',l:'Home'}];
+  ctx.font = "8px 'Prompt', sans-serif";
+  ctx.textAlign = 'left';
+  leg.forEach((li, i) => {
+    ctx.fillStyle = li.c;
+    ctx.fillRect(CW - 88, 14 + i * 16, 8, 8);
+    ctx.fillStyle = '#888780';
+    ctx.fillText(li.l, CW - 77, 21 + i * 16);
+  });
+
+  // update SVG overlay viewBox to match canvas
+  const svg = document.getElementById('token-svg');
+  svg.setAttribute('viewBox', `0 0 ${CW} ${CH}`);
+  drawTokens();
+}
+
+// ─── TOKEN DRAWING (SVG overlay) ─────────────────────────────
+function drawTokens() {
+  const svg = document.getElementById('token-svg');
+  // remove existing tokens
+  svg.querySelectorAll('.tok-g').forEach(e => e.remove());
+  for (let i = 0; i < numP; i++) {
+    const { cx, cy } = tileXY(pos[i]);
+    const o = TOK_OFF[i % 5];
+    const tcx = cx + o.dx, tcy = cy + o.dy;
+    const g = makeTokSVG(i, tcx, tcy);
+    svg.appendChild(g);
+  }
+}
+
+function makeTokSVG(i, tcx, tcy) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const g = document.createElementNS(ns, 'g');
+  g.setAttribute('class', 'tok-g');
+  g.setAttribute('id', `tok-${i}`);
+
+  // drop shadow
+  const sh = document.createElementNS(ns, 'circle');
+  sh.setAttribute('cx', tcx + 1); sh.setAttribute('cy', tcy + 2);
+  sh.setAttribute('r', '7.5');
+  sh.setAttribute('fill', 'rgba(0,0,0,0.18)');
+  g.appendChild(sh);
+
+  // main circle
+  const c = document.createElementNS(ns, 'circle');
+  c.setAttribute('cx', tcx); c.setAttribute('cy', tcy);
+  c.setAttribute('r', '7.5');
+  c.setAttribute('fill', players[i].color);
+  c.setAttribute('stroke', '#fff');
+  c.setAttribute('stroke-width', '2');
+  g.appendChild(c);
+
+  // number
+  const t = document.createElementNS(ns, 'text');
+  t.setAttribute('x', tcx); t.setAttribute('y', tcy + 3.5);
+  t.setAttribute('text-anchor', 'middle');
+  t.setAttribute('font-size', '7');
+  t.setAttribute('font-weight', '700');
+  t.setAttribute('fill', '#fff');
+  t.setAttribute('font-family', "'Prompt', sans-serif");
+  t.textContent = (i + 1);
+  g.appendChild(t);
+
+  return g;
+}
+
+// ─── ANIMATED WALKING ─────────────────────────────────────────
+let animating = false;
+
+function walkToken(playerIdx, fromTile, steps, onComplete) {
+  animating = true;
+  let current = fromTile;
+  const totalTiles = TOTAL;
+
+  function stepOnce() {
+    if (steps <= 0) {
+      // bounce on landing
+      bounceToken(playerIdx, () => {
+        animating = false;
+        onComplete();
+      });
+      return;
+    }
+    current = Math.min(totalTiles - 1, current + 1);
+    pos[playerIdx] = current;
+    moveTokenSVG(playerIdx, current, () => {
+      steps--;
+      setTimeout(stepOnce, 30); // pause between steps
+    });
+  }
+  stepOnce();
+}
+
+function moveTokenSVG(playerIdx, tileIdx, cb) {
+  const { cx, cy } = tileXY(tileIdx);
+  const o = TOK_OFF[playerIdx % 5];
+  const tcx = cx + o.dx, tcy = cy + o.dy;
+
+  // remove old token
+  const oldG = document.getElementById(`tok-${playerIdx}`);
+  if (oldG) oldG.remove();
+
+  // create new token at new position
+  const svg = document.getElementById('token-svg');
+  const g = makeTokSVG(playerIdx, tcx, tcy);
+
+  // animate using SMIL
+  const ns = 'http://www.w3.org/2000/svg';
+  const circles = g.querySelectorAll('circle');
+  circles.forEach((c, ci) => {
+    const fromCX = parseFloat(c.getAttribute('cx'));
+    const fromCY = parseFloat(c.getAttribute('cy'));
+  });
+
+  svg.appendChild(g);
+
+  // use CSS transition on the group via transform
+  const prevPt = tileXY(Math.max(0, tileIdx - 1));
+  const prevO = TOK_OFF[playerIdx % 5];
+  const prevTCX = prevPt.cx + prevO.dx;
+  const prevTCY = prevPt.cy + prevO.dy;
+
+  const dx = tcx - prevTCX;
+  const dy = tcy - prevTCY;
+
+  g.style.transform = `translate(${-dx}px, ${-dy}px)`;
+  g.style.transition = 'none';
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      g.style.transition = 'transform 0.13s cubic-bezier(0.4,0,0.2,1)';
+      g.style.transform = 'translate(0,0)';
+      setTimeout(cb, 140);
+    });
+  });
+}
+
+function bounceToken(playerIdx, cb) {
+  const g = document.getElementById(`tok-${playerIdx}`);
+  if (!g) { cb(); return; }
+  // quick up-down bounce
+  g.style.transition = 'transform 0.12s ease-out';
+  g.style.transform = 'translateY(-7px)';
+  setTimeout(() => {
+    g.style.transition = 'transform 0.1s ease-in';
+    g.style.transform = 'translateY(0)';
+    setTimeout(cb, 110);
+  }, 130);
+}
+
+// ─── GAME STATE ───────────────────────────────────────────────
+const TX = {
 en:{
   hsub:"Diabetes Education Board Game",lpl:"Number of players",sbtn:"▶ Start game",lhow:"How to play",
-  kruleT:"Knowledge card rule",kruleB:"When an action card is drawn: (1) Player reads it aloud. (2) Player explains in own words. (3) Others add/correct. (4) Facilitator or guidebook gives the full explanation — shown on screen.",
+  kruleT:"Knowledge card rule",kruleB:"When an action card is drawn: (1) Player reads aloud. (2) Explains in own words. (3) Others add/correct. (4) Facilitator or guidebook gives the full explanation — shown on screen.",
   lturn:"Current turn",lsc:"Scoreboard",ldice:"Roll dice",lreset:"↩ New game",lact:"What to do now",
   ph1:"1. Roll",ph2:"2. Question",ph3:"3. Gift",
-  pActCard:"Draw an action card and read it aloud",pQCard:"Draw a question card",pGiftCard:"Flip your mystery gift card!",
-  turnIs:"Player {n}'s turn",rolled:"Moved to space {n}",skipMsg:"Turn skipped — recovering",
+  pActCard:"Draw an action card and read it aloud",pQCard:"Draw a question card",pGiftCard:"Flip your mystery gift!",
+  turnIs:"Player {n}'s turn",rolled:"Walking to space {n}...",skipMsg:"Turn skipped — recovering",
   typeA:"Action card",typeQ:"Question card",typeG:"Gift card",typeE:"Special event",
   ptTitle:"Peer-teaching steps",
   pt1:"Read the card aloud to all players",pt2:"Explain in your own words — no peeking!",
   pt3:"Other players add or correct",pt4:"Facilitator or guidebook gives the full explanation",
   advBy:"Advance {n} spaces after discussion",stopHere:"Stop here — no movement this step",
   correct:"Correct! Draw a gift card.",wrong:"Incorrect.",nextTurn:"Next turn",close:"Continue",
-  giftFlip:"Tap to flip and reveal your gift!",pts:"pts",fortuneTitle:"Fortune card!",
+  giftFlip:"Tap to flip and reveal!",pts:"pts",
   evFwd:"Move forward {n} spaces",evBwd:"Move back {n} spaces",evSkip:"Skip your next turn",
   winTitle:"Game over! 🎉",winner:"{name} wins with {n} points!",finalScores:"Final scores",playAgain:"Play again",
 },
@@ -194,25 +457,18 @@ th:{
   lturn:"เทิร์นปัจจุบัน",lsc:"คะแนน",ldice:"ทอยลูกเต๋า",lreset:"↩ เริ่มใหม่",lact:"สิ่งที่ต้องทำ",
   ph1:"1. ทอย",ph2:"2. คำถาม",ph3:"3. ของรางวัล",
   pActCard:"หยิบการ์ด Action แล้วอ่านออกเสียงดัง",pQCard:"หยิบการ์ดคำถาม",pGiftCard:"พลิกการ์ดของรางวัลลึกลับ!",
-  turnIs:"เทิร์นของผู้เล่น {n}",rolled:"ขยับไปช่อง {n}",skipMsg:"ข้ามเทิร์น — พักฟื้น",
+  turnIs:"เทิร์นของผู้เล่น {n}",rolled:"กำลังเดินไปช่อง {n}...",skipMsg:"ข้ามเทิร์น — พักฟื้น",
   typeA:"การ์ด Action",typeQ:"การ์ดคำถาม",typeG:"การ์ดของรางวัล",typeE:"เหตุการณ์พิเศษ",
   ptTitle:"ขั้นตอนการสอนเพื่อน",
   pt1:"อ่านการ์ดออกเสียงดังให้ทุกคนฟัง",pt2:"อธิบายด้วยคำพูดของตัวเอง — ยังอย่าพลิกดูคำตอบ!",
   pt3:"ผู้เล่นคนอื่นเพิ่มเติมหรือแก้ไข",pt4:"ผู้ดำเนินการอธิบายครบถ้วน — แสดงบนหน้าจอแล้ว",
   advBy:"ขยับไปข้างหน้า {n} ช่อง หลังอภิปราย",stopHere:"หยุดที่นี่ — ไม่ขยับในขั้นตอนนี้",
   correct:"ถูกต้อง! จั่วการ์ดของรางวัล",wrong:"ไม่ถูกต้อง",nextTurn:"เทิร์นถัดไป",close:"ต่อไป",
-  giftFlip:"แตะเพื่อพลิกและดูของรางวัล!",pts:"คะแนน",fortuneTitle:"การ์ดโชคลาภ!",
+  giftFlip:"แตะเพื่อพลิกและดูของรางวัล!",pts:"คะแนน",
   evFwd:"ขยับไปข้างหน้า {n} ช่อง",evBwd:"ถอยหลัง {n} ช่อง",evSkip:"ข้ามเทิร์นถัดไป",
   winTitle:"จบเกม! 🎉",winner:"{name} ชนะด้วย {n} คะแนน!",finalScores:"คะแนนสุดท้าย",playAgain:"เล่นอีกครั้ง",
 }};
 
-const PCOLS=["#1D9E75","#378ADD","#D85A30","#7F77DD","#BA7517"];
-const PBGS=["#E1F5EE","#E6F1FB","#FAECE7","#EEEDFE","#FAEEDA"];
-const PEN=["Player 1","Player 2","Player 3","Player 4","Player 5"];
-const PTH=["ผู้เล่น 1","ผู้เล่น 2","ผู้เล่น 3","ผู้เล่น 4","ผู้เล่น 5"];
-const DF=["⚀","⚁","⚂","⚃","⚄","⚅"];
-const TOTAL=48;
-let STYPES=[];
 let lang='en',numP=2,players=[],pos=[],pts=[],skipNxt=[],curP=0,rolled=false,gameOn=false,phase=1;
 
 const GIFT_POOL=[
@@ -228,33 +484,33 @@ const GIFT_POOL=[
 ];
 
 const ACARDS=[
-  {en:{t:"The human body is made of many organs working together. If one organ works poorly, it affects the rest.",adv:2},th:{t:"ร่างกายมนุษย์ประกอบด้วยอวัยวะหลายส่วน หากอวัยวะใดทำงานไม่ดี ย่อมส่งผลต่อส่วนอื่น",adv:2},en_exp:"The body's organs are interdependent. In diabetes, the pancreas fails, raising blood glucose, which then damages blood vessels, nerves, kidneys, and eyes over time.",th_exp:"อวัยวะในร่างกายพึ่งพากัน ในเบาหวาน ตับอ่อนล้มเหลว ทำให้น้ำตาลสูง ซึ่งทำลายหลอดเลือด เส้นประสาท ไต และตา"},
-  {en:{t:"The pancreas produces insulin — a key that lets glucose enter your body's cells for energy.",adv:3},th:{t:"ตับอ่อนผลิตอินซูลิน ซึ่งทำหน้าที่เหมือนกุญแจที่ช่วยให้กลูโคสเข้าสู่เซลล์ของร่างกาย",adv:3},en_exp:"Without insulin, glucose cannot enter cells and accumulates in the bloodstream. In T1DM, the immune system destroys beta cells. Analogy: insulin = key, cell = locked room, glucose = food.",th_exp:"หากไม่มีอินซูลิน กลูโคสไม่สามารถเข้าเซลล์ได้ สะสมในเลือด ใน T1DM ระบบภูมิคุ้มกันทำลายเบต้าเซลล์ อุปมา: อินซูลิน = กุญแจ เซลล์ = ห้องที่ล็อก กลูโคส = อาหาร"},
-  {en:{t:"In Type 1 diabetes, the immune system destroys the beta cells of the pancreas, so no insulin is produced.",adv:0},th:{t:"ในเบาหวานชนิดที่ 1 ระบบภูมิคุ้มกันทำลายเบต้าเซลล์ของตับอ่อน ทำให้ไม่มีการผลิตอินซูลิน",adv:0},en_exp:"T1DM is autoimmune — NOT caused by diet. It differs from T2DM. Patients need lifelong insulin. Common myth to correct: 'You got diabetes from eating sugar' — this is FALSE for T1DM.",th_exp:"T1DM เป็นโรคภูมิคุ้มกันทำลายตัวเอง — ไม่ได้เกิดจากอาหาร ผู้ป่วย T1DM ต้องใช้อินซูลินตลอดชีวิต ความเข้าใจผิดที่ต้องแก้ไข: 'กินหวานเลยเป็นเบาหวาน' — ไม่จริงสำหรับ T1DM"},
-  {en:{t:"HbA1c reflects your average blood glucose over the past 2–3 months. Target for most T1D: below 7%.",adv:3},th:{t:"HbA1c สะท้อนค่าเฉลี่ยน้ำตาลในเลือดช่วง 2-3 เดือน เป้าหมาย T1D ส่วนใหญ่: ต่ำกว่า 7%",adv:3},en_exp:"Think of HbA1c as a 'glucose report card' for the past 3 months. Higher HbA1c = higher risk of complications. Check every 3 months at clinic.",th_exp:"คิดว่า HbA1c เป็น 'รายงานผลน้ำตาล' ช่วง 3 เดือน HbA1c สูง = ความเสี่ยงภาวะแทรกซ้อนสูงขึ้น ตรวจทุก 3 เดือนที่คลินิก"},
-  {en:{t:"Rotating insulin injection sites prevents lipohypertrophy — fat hardening that reduces insulin absorption.",adv:2},th:{t:"การสลับจุดฉีดอินซูลินป้องกัน lipohypertrophy — การแข็งตัวของไขมันที่ลดการดูดซึมอินซูลิน",adv:2},en_exp:"Rotate between: abdomen (fastest), thighs, upper arms, buttocks (slowest). Injecting in the same spot causes unpredictable insulin absorption. Check for lumps.",th_exp:"สลับระหว่าง: หน้าท้อง (เร็วสุด) ต้นขา ต้นแขน ก้น (ช้าสุด) การฉีดซ้ำที่จุดเดิมทำให้ดูดซึมอินซูลินไม่สม่ำเสมอ ตรวจหาก้อน"},
-  {en:{t:"Carbohydrates raise blood glucose the most. Counting carbs helps match your insulin dose to your food.",adv:3},th:{t:"คาร์โบไฮเดรตทำให้น้ำตาลสูงขึ้นมากที่สุด การนับคาร์บช่วยจับคู่โดสอินซูลินกับอาหาร",adv:3},en_exp:"1 carb serving = 15g. Examples: 1 slice bread ≈15g, 1/3 cup rice ≈15g, 1 small fruit ≈15g. Thai tip: 1 plate of rice ≈ 3–4 servings (45–60g).",th_exp:"1 serving คาร์บ = 15g ตัวอย่าง: ขนมปัง 1 แผ่น ≈15g ข้าว 1/3 ถ้วย ≈15g ผลไม้เล็ก 1 ชิ้น ≈15g เคล็ดลับ: ข้าว 1 จาน ≈ 3-4 servings (45-60g)"},
-  {en:{t:"Exercise lowers blood glucose by helping muscles absorb glucose without insulin. Plan ahead to prevent hypo.",adv:2},th:{t:"การออกกำลังกายช่วยลดน้ำตาลโดยช่วยให้กล้ามเนื้อดูดซึมกลูโคสโดยไม่ต้องใช้อินซูลิน",adv:2},en_exp:"Check glucose before exercise. If < 100 mg/dL, eat 15g carbs first. Safe pre-exercise range: 100–180 mg/dL. Carry fast-acting carbs during exercise.",th_exp:"ตรวจน้ำตาลก่อนออกกำลังกาย ถ้า < 100 mg/dL กินคาร์บ 15g ก่อน ช่วงปลอดภัย: 100-180 mg/dL พกคาร์บออกฤทธิ์เร็วระหว่างออกกำลังกาย"},
-  {en:{t:"DKA is a life-threatening emergency. Warning signs: vomiting, abdominal pain, fruity breath.",adv:0},th:{t:"DKA เป็นภาวะฉุกเฉินอันตรายถึงชีวิต สัญญาณ: อาเจียน ปวดท้อง ลมหายใจหอมหวาน",adv:0},en_exp:"DKA occurs when no insulin causes fat breakdown, producing ketones that acidify the blood. NEVER stop insulin when ill. Go to the ER immediately if these symptoms appear.",th_exp:"DKA เกิดเมื่อไม่มีอินซูลิน ร่างกายเผาผลาญไขมัน ผลิต ketones ทำให้เลือดเป็นกรด ห้ามหยุดอินซูลินเมื่อป่วย ไปห้องฉุกเฉินทันทีหากมีอาการเหล่านี้"},
-  {en:{t:"Healthy snacks for diabetics: nuts, eggs, low-GI fruits like berries and apples, unsweetened yogurt.",adv:2},th:{t:"อาหารว่างสำหรับผู้ป่วยเบาหวาน: ถั่ว ไข่ ผลไม้ GI ต่ำอย่างเบอร์รี่และแอปเปิ้ล โยเกิร์ตไม่หวาน",adv:2},en_exp:"Good snacks: low GI, moderate carbs, some protein/fat. Avoid: sugary drinks, white bread, sticky rice sweets. Count snack carbs in your daily plan.",th_exp:"อาหารว่างที่ดี: GI ต่ำ คาร์บพอเหมาะ มีโปรตีน/ไขมันบ้าง หลีกเลี่ยง: เครื่องดื่มหวาน ขนมปังขาว ข้าวเหนียวหวาน นับคาร์บของว่างในแผนประจำวัน"},
-  {en:{t:"Sick day rule: NEVER stop insulin when ill. Monitor glucose more often and drink plenty of fluids.",adv:3},th:{t:"กฎวันเจ็บป่วย: ห้ามหยุดอินซูลินเมื่อป่วย ติดตามน้ำตาลบ่อยขึ้นและดื่มน้ำให้เพียงพอ",adv:3},en_exp:"Illness raises blood glucose from stress hormones. Check glucose every 2–4 hours. Check ketones if > 250 mg/dL. Contact your diabetes team if glucose stays high.",th_exp:"ความเจ็บป่วยทำให้น้ำตาลสูงจากฮอร์โมนความเครียด ตรวจน้ำตาลทุก 2-4 ชั่วโมง ตรวจ ketones ถ้า > 250 mg/dL ติดต่อทีมเบาหวานถ้าน้ำตาลยังสูง"},
-  {en:{t:"The glycemic index (GI) measures how fast food raises blood glucose. Low-GI foods cause slower, gentler rises.",adv:2},th:{t:"ดัชนีน้ำตาล (GI) วัดความเร็วที่อาหารทำให้น้ำตาลสูงขึ้น อาหาร GI ต่ำทำให้น้ำตาลขึ้นช้าและนุ่มนวลกว่า",adv:2},en_exp:"Low GI: oats, legumes, most fruits, brown rice. High GI: white bread, white rice, sugary drinks. Combining high-GI with protein/fat/fiber slows absorption.",th_exp:"GI ต่ำ: ข้าวโอ๊ต พืชตระกูลถั่ว ผลไม้ส่วนใหญ่ ข้าวกล้อง GI สูง: ขนมปังขาว ข้าวขาว เครื่องดื่มหวาน การรับประทานอาหาร GI สูงร่วมกับโปรตีน ไขมัน ใยอาหาร ช่วยชะลอการดูดซึม"},
-  {en:{t:"Check blood glucose before meals, 2 hours after meals, before exercise, and before bed.",adv:2},th:{t:"ตรวจน้ำตาลในเลือดก่อนอาหาร 2 ชั่วโมงหลังอาหาร ก่อนออกกำลังกาย และก่อนนอน",adv:2},en_exp:"Target ranges: fasting 80–130 mg/dL, post-meal < 180 mg/dL. SMBG helps identify patterns — bring your glucose log to every clinic visit.",th_exp:"ช่วงเป้าหมาย: อดอาหาร 80-130 mg/dL หลังอาหาร < 180 mg/dL SMBG ช่วยระบุรูปแบบ — นำบันทึกน้ำตาลไปทุกครั้งที่พบแพทย์"},
+  {en:{t:"The human body is made of many organs working together. If one organ works poorly, it affects the rest.",adv:2},th:{t:"ร่างกายมนุษย์ประกอบด้วยอวัยวะหลายส่วน หากอวัยวะใดทำงานไม่ดี ย่อมส่งผลต่อส่วนอื่น",adv:2},en_exp:"The body's organs are interdependent. In diabetes, the pancreas fails, raising blood glucose, which damages blood vessels, nerves, kidneys, and eyes over time.",th_exp:"อวัยวะในร่างกายพึ่งพากัน ในเบาหวาน ตับอ่อนล้มเหลว ทำให้น้ำตาลสูง ซึ่งทำลายหลอดเลือด เส้นประสาท ไต และตา"},
+  {en:{t:"The pancreas produces insulin — a key that lets glucose enter your body's cells for energy.",adv:3},th:{t:"ตับอ่อนผลิตอินซูลิน ซึ่งทำหน้าที่เหมือนกุญแจที่ช่วยให้กลูโคสเข้าสู่เซลล์ของร่างกาย",adv:3},en_exp:"Without insulin, glucose accumulates in the bloodstream. In T1DM, the immune system destroys beta cells. Analogy: insulin = key, cell = locked room, glucose = food.",th_exp:"หากไม่มีอินซูลิน กลูโคสสะสมในเลือด ใน T1DM ระบบภูมิคุ้มกันทำลายเบต้าเซลล์ อุปมา: อินซูลิน = กุญแจ เซลล์ = ห้องที่ล็อก"},
+  {en:{t:"In Type 1 diabetes, the immune system destroys beta cells of the pancreas, so no insulin is produced.",adv:0},th:{t:"ในเบาหวานชนิดที่ 1 ระบบภูมิคุ้มกันทำลายเบต้าเซลล์ของตับอ่อน ทำให้ไม่มีการผลิตอินซูลิน",adv:0},en_exp:"T1DM is autoimmune — NOT caused by diet. Patients need lifelong insulin. Common myth: 'You got diabetes from eating sugar' — FALSE for T1DM.",th_exp:"T1DM เป็นโรคภูมิคุ้มกันทำลายตัวเอง ไม่ได้เกิดจากอาหาร ผู้ป่วยต้องใช้อินซูลินตลอดชีวิต ความเข้าใจผิด: 'กินหวานเลยเป็นเบาหวาน' — ไม่จริงสำหรับ T1DM"},
+  {en:{t:"HbA1c reflects average blood glucose over 2–3 months. Target for most T1D patients: below 7%.",adv:3},th:{t:"HbA1c สะท้อนค่าเฉลี่ยน้ำตาลในเลือดช่วง 2-3 เดือน เป้าหมาย T1D ส่วนใหญ่: ต่ำกว่า 7%",adv:3},en_exp:"Think of HbA1c as a '3-month glucose report card'. Higher HbA1c = higher risk of complications. Check every 3 months at clinic.",th_exp:"คิดว่า HbA1c เป็น 'รายงานผลน้ำตาล 3 เดือน' HbA1c สูง = ความเสี่ยงภาวะแทรกซ้อนสูงขึ้น ตรวจทุก 3 เดือนที่คลินิก"},
+  {en:{t:"Rotating insulin injection sites prevents lipohypertrophy — fat hardening that reduces insulin absorption.",adv:2},th:{t:"การสลับจุดฉีดอินซูลินป้องกัน lipohypertrophy — การแข็งตัวของไขมันที่ลดการดูดซึมอินซูลิน",adv:2},en_exp:"Rotate between: abdomen (fastest), thighs, upper arms, buttocks (slowest). Injecting in the same spot causes unpredictable insulin absorption.",th_exp:"สลับระหว่าง: หน้าท้อง (เร็วสุด) ต้นขา ต้นแขน ก้น (ช้าสุด) การฉีดซ้ำที่จุดเดิมทำให้ดูดซึมอินซูลินไม่สม่ำเสมอ"},
+  {en:{t:"Carbohydrates raise blood glucose the most. Counting carbs helps match your insulin dose to your food.",adv:3},th:{t:"คาร์โบไฮเดรตทำให้น้ำตาลสูงขึ้นมากที่สุด การนับคาร์บช่วยจับคู่โดสอินซูลินกับอาหาร",adv:3},en_exp:"1 carb serving = 15g. Examples: 1 slice bread ≈15g, 1/3 cup rice ≈15g, 1 small fruit ≈15g. Thai tip: 1 plate of rice ≈ 3–4 servings.",th_exp:"1 serving คาร์บ = 15g ตัวอย่าง: ขนมปัง 1 แผ่น ≈15g ข้าว 1/3 ถ้วย ≈15g เคล็ดลับ: ข้าว 1 จาน ≈ 3-4 servings"},
+  {en:{t:"Exercise lowers blood glucose by helping muscles absorb glucose without insulin. Plan ahead to prevent hypo.",adv:2},th:{t:"การออกกำลังกายช่วยลดน้ำตาลโดยช่วยให้กล้ามเนื้อดูดซึมกลูโคสโดยไม่ต้องใช้อินซูลิน",adv:2},en_exp:"Check glucose before exercise. If < 100 mg/dL, eat 15g carbs first. Safe pre-exercise range: 100–180 mg/dL.",th_exp:"ตรวจน้ำตาลก่อนออกกำลังกาย ถ้า < 100 mg/dL กินคาร์บ 15g ก่อน ช่วงปลอดภัย: 100-180 mg/dL"},
+  {en:{t:"DKA is a life-threatening emergency. Warning signs: vomiting, abdominal pain, fruity breath.",adv:0},th:{t:"DKA เป็นภาวะฉุกเฉินอันตรายถึงชีวิต สัญญาณ: อาเจียน ปวดท้อง ลมหายใจหอมหวาน",adv:0},en_exp:"DKA occurs when no insulin causes fat breakdown, producing ketones. NEVER stop insulin when ill. Go to ER immediately if these symptoms appear.",th_exp:"DKA เกิดเมื่อไม่มีอินซูลิน ร่างกายเผาผลาญไขมัน ผลิต ketones ห้ามหยุดอินซูลินเมื่อป่วย ไปห้องฉุกเฉินทันที"},
+  {en:{t:"Healthy snacks for diabetics: nuts, eggs, low-GI fruits like berries and apples, unsweetened yogurt.",adv:2},th:{t:"อาหารว่างสำหรับผู้ป่วยเบาหวาน: ถั่ว ไข่ ผลไม้ GI ต่ำอย่างเบอร์รี่และแอปเปิ้ล โยเกิร์ตไม่หวาน",adv:2},en_exp:"Good snacks: low GI, moderate carbs, some protein/fat. Avoid: sugary drinks, white bread, sticky rice sweets.",th_exp:"อาหารว่างที่ดี: GI ต่ำ คาร์บพอเหมาะ มีโปรตีน/ไขมันบ้าง หลีกเลี่ยง: เครื่องดื่มหวาน ขนมปังขาว ข้าวเหนียวหวาน"},
+  {en:{t:"Sick day rule: NEVER stop insulin when ill. Monitor glucose more often and drink plenty of fluids.",adv:3},th:{t:"กฎวันเจ็บป่วย: ห้ามหยุดอินซูลินเมื่อป่วย ติดตามน้ำตาลบ่อยขึ้นและดื่มน้ำให้เพียงพอ",adv:3},en_exp:"Illness raises blood glucose from stress hormones. Check every 2–4 hours. Check ketones if > 250 mg/dL. Contact your diabetes team if glucose stays high.",th_exp:"ความเจ็บป่วยทำให้น้ำตาลสูงจากฮอร์โมนความเครียด ตรวจทุก 2-4 ชั่วโมง ตรวจ ketones ถ้า > 250 mg/dL"},
+  {en:{t:"The glycemic index (GI) measures how fast food raises blood glucose. Low-GI foods cause slower, gentler rises.",adv:2},th:{t:"ดัชนีน้ำตาล (GI) วัดความเร็วที่อาหารทำให้น้ำตาลสูงขึ้น อาหาร GI ต่ำทำให้น้ำตาลขึ้นช้าและนุ่มนวลกว่า",adv:2},en_exp:"Low GI: oats, legumes, most fruits, brown rice. High GI: white bread, white rice, sugary drinks. Combining high-GI with protein/fat/fiber slows absorption.",th_exp:"GI ต่ำ: ข้าวโอ๊ต พืชตระกูลถั่ว ผลไม้ส่วนใหญ่ ข้าวกล้อง GI สูง: ขนมปังขาว ข้าวขาว เครื่องดื่มหวาน"},
+  {en:{t:"Check blood glucose before meals, 2 hours after meals, before exercise, and before bed.",adv:2},th:{t:"ตรวจน้ำตาลในเลือดก่อนอาหาร 2 ชั่วโมงหลังอาหาร ก่อนออกกำลังกาย และก่อนนอน",adv:2},en_exp:"Target ranges: fasting 80–130 mg/dL, post-meal < 180 mg/dL. SMBG helps identify glucose patterns. Bring your log to every clinic visit.",th_exp:"ช่วงเป้าหมาย: อดอาหาร 80-130 mg/dL หลังอาหาร < 180 mg/dL SMBG ช่วยระบุรูปแบบน้ำตาล นำบันทึกไปทุกครั้งที่พบแพทย์"},
 ];
 
 const QCARDS=[
-  {en:{q:"What blood glucose level (mg/dL) defines hypoglycemia?",opts:["< 70","< 100","< 120","< 50"],ans:0},th:{q:"ระดับน้ำตาลในเลือด (mg/dL) ใดนิยามภาวะน้ำตาลต่ำ?",opts:["< 70","< 100","< 120","< 50"],ans:0},en_exp:"Hypoglycemia = blood glucose < 70 mg/dL. Severe hypoglycemia < 54 mg/dL may cause seizures or loss of consciousness. Even 70–100 mg/dL is borderline low.",th_exp:"น้ำตาลต่ำ = น้ำตาล < 70 mg/dL น้ำตาลต่ำรุนแรง < 54 mg/dL อาจทำให้ชักหรือหมดสติ แม้ 70-100 mg/dL ก็ค่อนข้างต่ำ"},
-  {en:{q:"SMBG reads 43 mg/dL. What is the FIRST correct action?",opts:["Inject insulin now","Take 15g fast carbs, wait 15 min, recheck","Skip next meal","Call ambulance immediately"],ans:1},th:{q:"ค่า SMBG อ่านได้ 43 mg/dL สิ่งที่ควรทำเป็นอันดับแรกคืออะไร?",opts:["ฉีดอินซูลินทันที","รับประทานคาร์บออกฤทธิ์เร็ว 15g รอ 15 นาที วัดซ้ำ","งดมื้อถัดไป","โทรเรียกรถพยาบาลทันที"],ans:1},en_exp:"Apply the 15-15 rule: 15g fast carbs (3–4 glucose tablets, 120ml juice, or hard candies), wait 15 min, recheck. Repeat if still < 70. Never inject insulin for hypoglycemia.",th_exp:"ใช้กฎ 15-15: คาร์บออกฤทธิ์เร็ว 15g (กลูโคสเม็ด 3-4 เม็ด น้ำผลไม้ 120ml หรือลูกอม) รอ 15 นาที วัดซ้ำ ทำซ้ำถ้ายัง < 70 ห้ามฉีดอินซูลินสำหรับ hypoglycemia"},
+  {en:{q:"What blood glucose level (mg/dL) defines hypoglycemia?",opts:["< 70","< 100","< 120","< 50"],ans:0},th:{q:"ระดับน้ำตาลในเลือด (mg/dL) ใดนิยามภาวะน้ำตาลต่ำ?",opts:["< 70","< 100","< 120","< 50"],ans:0},en_exp:"Hypoglycemia = blood glucose < 70 mg/dL. Severe < 54 mg/dL may cause seizures or loss of consciousness. Even 70–100 mg/dL is borderline low.",th_exp:"น้ำตาลต่ำ = น้ำตาล < 70 mg/dL รุนแรง < 54 mg/dL อาจทำให้ชักหรือหมดสติ แม้ 70-100 mg/dL ก็ค่อนข้างต่ำ"},
+  {en:{q:"SMBG reads 43 mg/dL. What is the FIRST correct action?",opts:["Inject insulin now","Take 15g fast carbs, wait 15 min, recheck","Skip next meal","Call ambulance immediately"],ans:1},th:{q:"ค่า SMBG อ่านได้ 43 mg/dL สิ่งที่ควรทำเป็นอันดับแรกคืออะไร?",opts:["ฉีดอินซูลินทันที","รับประทานคาร์บออกฤทธิ์เร็ว 15g รอ 15 นาที วัดซ้ำ","งดมื้อถัดไป","โทรเรียกรถพยาบาลทันที"],ans:1},en_exp:"Apply the 15-15 rule: 15g fast carbs (3–4 glucose tablets, 120ml juice, or hard candies), wait 15 min, recheck. Repeat if still < 70. Never inject insulin for hypoglycemia.",th_exp:"ใช้กฎ 15-15: คาร์บออกฤทธิ์เร็ว 15g (กลูโคสเม็ด 3-4 เม็ด น้ำผลไม้ 120ml หรือลูกอม) รอ 15 นาที วัดซ้ำ ทำซ้ำถ้ายัง < 70"},
   {en:{q:"Which food has the HIGHEST glycemic index?",opts:["Brown rice","White bread","Oatmeal","Apple"],ans:1},th:{q:"อาหารใดมีดัชนีน้ำตาล (GI) สูงที่สุด?",opts:["ข้าวกล้อง","ขนมปังขาว","โอ๊ตมีล","แอปเปิ้ล"],ans:1},en_exp:"White bread GI ~71–75 (high). Brown rice ~50–65 (medium). Oatmeal ~55 (medium). Apple ~36 (low). More processed = higher GI.",th_exp:"ขนมปังขาว GI ~71-75 (สูง) ข้าวกล้อง ~50-65 (ปานกลาง) โอ๊ตมีล ~55 (ปานกลาง) แอปเปิ้ล ~36 (ต่ำ)"},
   {en:{q:"Unopened insulin must be stored at:",opts:["Room temp 25–30°C","Fridge 2–8°C","Freezer below 0°C","Any temperature"],ans:1},th:{q:"ควรเก็บอินซูลิน (ยังไม่เปิด) ที่อุณหภูมิเท่าไร?",opts:["อุณหภูมิห้อง 25-30°C","ตู้เย็น 2-8°C","ช่องแช่แข็ง ต่ำกว่า 0°C","อุณหภูมิใดก็ได้"],ans:1},en_exp:"Unopened insulin: fridge 2–8°C. Never freeze. Opened vials: room temp (< 25–30°C) for up to 28 days. Cloudy or clumped = damaged → discard.",th_exp:"อินซูลินที่ยังไม่เปิด: ตู้เย็น 2-8°C ห้ามแช่แข็ง ขวดที่เปิดแล้ว: อุณหภูมิห้อง ≤ 28 วัน ขุ่นหรือมีตะกอน = เสียหาย → ทิ้ง"},
   {en:{q:"HbA1c measures:",opts:["Blood sugar right now","Average blood sugar over 2–3 months","Fasting blood sugar","Post-meal blood sugar"],ans:1},th:{q:"HbA1c วัดอะไร?",opts:["ระดับน้ำตาลขณะนั้น","ค่าเฉลี่ยน้ำตาลใน 2-3 เดือน","น้ำตาลขณะอดอาหาร","น้ำตาลหลังอาหาร"],ans:1},en_exp:"HbA1c = average blood glucose over 2–3 months. Target for most T1DM: < 7%. Check every 3 months at clinic.",th_exp:"HbA1c = ค่าเฉลี่ยน้ำตาลใน 2-3 เดือน เป้าหมาย T1DM ส่วนใหญ่: < 7% ตรวจทุก 3 เดือนที่คลินิก"},
-  {en:{q:"A sign of hyperglycemia is:",opts:["Shakiness","Extreme thirst and frequent urination","Cold sweating","Rapid heartbeat"],ans:1},th:{q:"อาการใดเป็นสัญญาณของน้ำตาลสูง?",opts:["มือสั่น","กระหายน้ำมาก ปัสสาวะบ่อย","เหงื่อออกตัวเย็น","ใจสั่น"],ans:1},en_exp:"Hyperglycemia = 3 Ps: Polyuria, Polydipsia, Polyphagia. Also: blurry vision, fatigue, fruity breath. Shakiness/cold sweat/rapid heartbeat = HYPOGLYCEMIA signs (opposite!).",th_exp:"น้ำตาลสูง = 3P: ปัสสาวะบ่อย กระหายน้ำ หิวบ่อย ยังมี: ตามัว อ่อนเพลีย ลมหายใจหอมหวาน มือสั่น/เหงื่อออก/ใจสั่น = อาการน้ำตาลต่ำ (ตรงข้าม!)"},
-  {en:{q:"T1D patient's glucose is 90 mg/dL before exercise. What should they do?",opts:["Exercise normally","Eat 15g carbs first","Skip exercise today","Inject extra insulin"],ans:1},th:{q:"ผู้ป่วย T1D น้ำตาลก่อนออกกำลังกาย 90 mg/dL ควรทำอย่างไร?",opts:["ออกกำลังกายได้ปกติ","กินคาร์บ 15g ก่อน","งดออกกำลังกายวันนี้","ฉีดอินซูลินเพิ่ม"],ans:1},en_exp:"90 mg/dL is borderline low before exercise for T1DM. Exercise further lowers blood sugar. Eat 15g carbs first. Safe pre-exercise target: 100–180 mg/dL. Never inject extra insulin before exercise.",th_exp:"90 mg/dL ค่อนข้างต่ำก่อนออกกำลังกาย การออกกำลังกายลดน้ำตาลลงอีก กินคาร์บ 15g ก่อน เป้าหมายก่อนออกกำลังกาย: 100-180 mg/dL ห้ามฉีดอินซูลินเพิ่มก่อนออกกำลังกาย"},
-  {en:{q:"1 serving of carbohydrate equals:",opts:["5g","15g","30g","45g"],ans:1},th:{q:"คาร์โบไฮเดรต 1 serving เท่ากับ:",opts:["5g","15g","30g","45g"],ans:1},en_exp:"1 carb serving = 15g. Standard unit for carb counting and hypoglycemia treatment. 1/3 cup rice ≈15g, 1 slice bread ≈15g, 1 small apple ≈15g, 1 cup milk ≈12g.",th_exp:"1 serving คาร์บ = 15g หน่วยมาตรฐานสำหรับการนับคาร์บและรักษา hypoglycemia ข้าว 1/3 ถ้วย ≈15g ขนมปัง 1 แผ่น ≈15g แอปเปิ้ลเล็ก 1 ลูก ≈15g นม 1 ถ้วย ≈12g"},
-  {en:{q:"Which complication of DM affects the kidneys?",opts:["Retinopathy","Nephropathy","Neuropathy","Cardiomyopathy"],ans:1},th:{q:"ภาวะแทรกซ้อนใดของเบาหวานส่งผลต่อไต?",opts:["เรตินอปาธี","เนโฟรปาธี","นิวโรปาธี","คาร์ดิโอไมโอปาธี"],ans:1},en_exp:"Nephropathy = kidneys. Retinopathy = eyes. Neuropathy = nerves (numbness in feet). All preventable with good glucose control. Check urine microalbumin yearly.",th_exp:"Nephropathy = ไต Retinopathy = ตา Neuropathy = เส้นประสาท (ชาเท้า) ทุกอย่างป้องกันได้ ตรวจ microalbumin ในปัสสาวะทุกปี"},
-  {en:{q:"Rapid-acting insulin should be given:",opts:["1 hour before meals","30 min before meals","0–15 min before meals","After meals"],ans:2},th:{q:"อินซูลินออกฤทธิ์เร็วควรให้เมื่อใด?",opts:["1 ชั่วโมงก่อนอาหาร","30 นาทีก่อนอาหาร","0-15 นาทีก่อนอาหาร","หลังอาหาร"],ans:2},en_exp:"Rapid-acting analogs (lispro, aspart, glulisine): 0–15 min before meals. Regular insulin: 30 min before. Basal insulin (glargine, detemir): once/twice daily regardless of meals.",th_exp:"อินซูลินออกฤทธิ์เร็ว (lispro, aspart, glulisine): ก่อนอาหาร 0-15 นาที Regular insulin: ก่อนอาหาร 30 นาที Basal insulin: วันละครั้ง/สองครั้ง"},
+  {en:{q:"A sign of hyperglycemia is:",opts:["Shakiness","Extreme thirst and frequent urination","Cold sweating","Rapid heartbeat"],ans:1},th:{q:"อาการใดเป็นสัญญาณของน้ำตาลสูง?",opts:["มือสั่น","กระหายน้ำมาก ปัสสาวะบ่อย","เหงื่อออกตัวเย็น","ใจสั่น"],ans:1},en_exp:"Hyperglycemia = 3 Ps: Polyuria, Polydipsia, Polyphagia. Also: blurry vision, fatigue, fruity breath. Shakiness/cold sweat/rapid heartbeat = HYPOGLYCEMIA (opposite!).",th_exp:"น้ำตาลสูง = 3P: ปัสสาวะบ่อย กระหายน้ำ หิวบ่อย ยังมี: ตามัว อ่อนเพลีย ลมหายใจหอมหวาน มือสั่น/เหงื่อออก/ใจสั่น = น้ำตาลต่ำ (ตรงข้าม!)"},
+  {en:{q:"T1D patient's glucose is 90 mg/dL before exercise. What should they do?",opts:["Exercise normally","Eat 15g carbs first","Skip exercise today","Inject extra insulin"],ans:1},th:{q:"ผู้ป่วย T1D น้ำตาลก่อนออกกำลังกาย 90 mg/dL ควรทำอย่างไร?",opts:["ออกกำลังกายได้ปกติ","กินคาร์บ 15g ก่อน","งดออกกำลังกายวันนี้","ฉีดอินซูลินเพิ่ม"],ans:1},en_exp:"90 mg/dL is borderline low for T1DM before exercise. Exercise further lowers blood sugar. Eat 15g carbs first. Safe pre-exercise target: 100–180 mg/dL.",th_exp:"90 mg/dL ค่อนข้างต่ำก่อนออกกำลังกาย การออกกำลังกายลดน้ำตาลลงอีก กินคาร์บ 15g ก่อน เป้าหมาย: 100-180 mg/dL"},
+  {en:{q:"1 serving of carbohydrate equals:",opts:["5g","15g","30g","45g"],ans:1},th:{q:"คาร์โบไฮเดรต 1 serving เท่ากับ:",opts:["5g","15g","30g","45g"],ans:1},en_exp:"1 carb serving = 15g. Standard unit for carb counting and hypoglycemia treatment. 1/3 cup rice ≈15g, 1 slice bread ≈15g, 1 small apple ≈15g.",th_exp:"1 serving คาร์บ = 15g หน่วยมาตรฐานสำหรับการนับคาร์บและรักษา hypoglycemia ข้าว 1/3 ถ้วย ≈15g ขนมปัง 1 แผ่น ≈15g"},
+  {en:{q:"Which complication of DM affects the kidneys?",opts:["Retinopathy","Nephropathy","Neuropathy","Cardiomyopathy"],ans:1},th:{q:"ภาวะแทรกซ้อนใดของเบาหวานส่งผลต่อไต?",opts:["เรตินอปาธี","เนโฟรปาธี","นิวโรปาธี","คาร์ดิโอไมโอปาธี"],ans:1},en_exp:"Nephropathy = kidneys. Retinopathy = eyes. Neuropathy = nerves. All preventable with good glucose control. Check urine microalbumin yearly.",th_exp:"Nephropathy = ไต Retinopathy = ตา Neuropathy = เส้นประสาท ทุกอย่างป้องกันได้ ตรวจ microalbumin ในปัสสาวะทุกปี"},
+  {en:{q:"Rapid-acting insulin should be given:",opts:["1 hour before meals","30 min before meals","0–15 min before meals","After meals"],ans:2},th:{q:"อินซูลินออกฤทธิ์เร็วควรให้เมื่อใด?",opts:["1 ชั่วโมงก่อนอาหาร","30 นาทีก่อนอาหาร","0-15 นาทีก่อนอาหาร","หลังอาหาร"],ans:2},en_exp:"Rapid-acting analogs (lispro, aspart, glulisine): 0–15 min before meals. Regular insulin: 30 min before. Basal insulin: once/twice daily regardless of meals.",th_exp:"อินซูลินออกฤทธิ์เร็ว (lispro, aspart, glulisine): ก่อนอาหาร 0-15 นาที Regular insulin: ก่อนอาหาร 30 นาที Basal insulin: วันละครั้ง/สองครั้ง"},
   {en:{q:"How long can an opened insulin vial be kept at room temperature?",opts:["7 days","14 days","28 days","90 days"],ans:2},th:{q:"ขวดอินซูลินที่เปิดแล้วเก็บที่อุณหภูมิห้องได้นานเท่าไร?",opts:["7 วัน","14 วัน","28 วัน","90 วัน"],ans:2},en_exp:"Opened insulin: room temp (< 25–30°C) for up to 28 days. After that, potency degrades. Write the opening date on the vial.",th_exp:"อินซูลินที่เปิดแล้ว: อุณหภูมิห้อง (< 25-30°C) ≤ 28 วัน หลังจากนั้นฤทธิ์ลดลง เขียนวันที่เปิดบนขวด"},
-  {en:{q:"Daily foot inspection is important in DM because:",opts:["Feet sweat more","Neuropathy causes unnoticed wounds","Shoes fit differently","Feet grow larger"],ans:1},th:{q:"การตรวจเท้าทุกวันสำคัญในเบาหวานเพราะ:",opts:["เท้าเหงื่อออกมากขึ้น","neuropathy ทำให้ไม่รู้สึกแผล","รองเท้าพอดีแตกต่างกัน","เท้าขยายใหญ่ขึ้น"],ans:1},en_exp:"Diabetic neuropathy reduces sensation — wounds go unnoticed. Small blisters can become ulcers or lead to amputation. Inspect daily: soles, heels, between toes.",th_exp:"Diabetic neuropathy ลดความรู้สึก แผลไม่ถูกสังเกต ตุ่มเล็กๆ อาจกลายเป็นแผลเรื้อรังหรือต้องตัดอวัยวะ ตรวจทุกวัน: ฝ่าเท้า ส้นเท้า ระหว่างนิ้ว"},
+  {en:{q:"Daily foot inspection is important in DM because:",opts:["Feet sweat more","Neuropathy causes unnoticed wounds","Shoes fit differently","Feet grow larger"],ans:1},th:{q:"การตรวจเท้าทุกวันสำคัญในเบาหวานเพราะ:",opts:["เท้าเหงื่อออกมากขึ้น","neuropathy ทำให้ไม่รู้สึกแผล","รองเท้าพอดีแตกต่างกัน","เท้าขยายใหญ่ขึ้น"],ans:1},en_exp:"Diabetic neuropathy reduces sensation — wounds go unnoticed. Small blisters can become ulcers or lead to amputation. Inspect daily: soles, heels, between toes.",th_exp:"Diabetic neuropathy ลดความรู้สึก แผลไม่ถูกสังเกต ตุ่มเล็กๆ อาจกลายเป็นแผลเรื้อรัง ตรวจทุกวัน: ฝ่าเท้า ส้นเท้า ระหว่างนิ้ว"},
 ];
 
 const EVENTS=[
@@ -266,7 +522,7 @@ const EVENTS=[
   {en:{icon:"★",title:"Injection site rotation!",body:"You remembered to rotate your insulin injection sites. Perfect technique!",effect:"fwd",n:2},th:{icon:"★",title:"หมุนจุดฉีดอินซูลิน!",body:"คุณจำได้ว่าต้องสลับจุดฉีดอินซูลิน เทคนิคที่สมบูรณ์แบบ!",effect:"fwd",n:2}},
 ];
 
-function genST(){STYPES=[];for(let i=0;i<TOTAL;i++){if(i===0)STYPES.push('S');else if(i===TOTAL-1)STYPES.push('F');else STYPES.push(Math.random()<0.65?'A':'E');}}
+// ─── UI HELPERS ───────────────────────────────────────────────
 function setL(l,btn){lang=l;document.querySelectorAll('.lb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');applyTX();}
 function applyTX(){
   const tx=TX[lang];
@@ -276,146 +532,294 @@ function applyTX(){
   document.getElementById('krule-t').textContent=tx.kruleT;
   document.getElementById('krule-b').textContent=tx.kruleB;
   if(gameOn){
-    ['lturn','lsc','ldice','lreset','lact'].forEach(id=>{const map={lturn:tx.lturn,lsc:tx.lsc,ldice:tx.ldice,lreset:tx.lreset,lact:tx.lact};document.getElementById(id).textContent=map[id];});
-    document.getElementById('ph1').textContent=tx.ph1;document.getElementById('ph2').textContent=tx.ph2;document.getElementById('ph3').textContent=tx.ph3;
-    document.getElementById('rollbtn').textContent='🎲 '+tx.ldice;
+    document.getElementById('lturn').textContent=tx.lturn;
+    document.getElementById('lsc').textContent=tx.lsc;
+    document.getElementById('ldice').textContent=tx.ldice;
+    document.getElementById('lreset').textContent=tx.lreset;
+    document.getElementById('lact').textContent=tx.lact;
+    document.getElementById('ph1').textContent=tx.ph1;
+    document.getElementById('ph2').textContent=tx.ph2;
+    document.getElementById('ph3').textContent=tx.ph3;
     updateTurnUI();updateScoreUI();
   }
 }
-function selP(n,el){numP=n;document.querySelectorAll('.ptag').forEach((t,i)=>{const c=PCOLS[i];t.style.background='';t.style.color=c;t.style.borderColor=c;});el.style.background=PCOLS[n-2];el.style.color='#fff';el.style.borderColor=PCOLS[n-2];}
-function startGame(){
-  genST();players=[];pos=[];pts=[];skipNxt=[];
-  for(let i=0;i<numP;i++){players.push({en:PEN[i],th:PTH[i],color:PCOLS[i],bg:PBGS[i]});pos.push(0);pts.push(0);skipNxt.push(false);}
-  curP=0;rolled=false;phase=1;gameOn=true;
-  document.getElementById('sscreen').classList.add('hidden');
-  document.getElementById('gscreen').classList.remove('hidden');
-  applyTX();drawBoard();updateTurnUI();updateScoreUI();setPhase(1);
-  document.getElementById('actbox').textContent=TX[lang].pActCard;
-}
-function getWPts(){
-  const pts=[],rows=6,cols=8,sw=52,sh=46,ox=14,oy=14;
-  for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){const col=(r%2===0)?c:(cols-1-c);pts.push({x:ox+col*sw+sw/2,y:oy+r*sh+sh/2});}}
-  return pts;
-}
-function drawBoard(){
-  const svg=document.getElementById('bsvg');
-  const wpts=getWPts().slice(0,TOTAL);
-  const fillM={S:'#1D9E75',F:'#D85A30',A:'#378ADD',E:'#BA7517'};
-  const stkM={S:'#085041',F:'#712B13',A:'#0C447C',E:'#633806'};
-  let h='';
-  for(let i=0;i<wpts.length-1;i++){const a=wpts[i],b=wpts[i+1];h+=`<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="#D3D1C7" stroke-width="1.5" stroke-dasharray="3 3"/>`;}
-  wpts.forEach((p,i)=>{
-    const st=STYPES[i],r=(st==='S'||st==='F')?14:11;
-    h+=`<circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${fillM[st]}" stroke="${stkM[st]}" stroke-width="1.5"/>`;
-    const lbl=st==='S'?'S':st==='F'?'F':st==='A'?'A':'!';
-    h+=`<text x="${p.x}" y="${p.y+4}" text-anchor="middle" font-size="${st==='S'||st==='F'?9:8}" font-weight="700" fill="#fff" font-family="Nunito,sans-serif">${lbl}</text>`;
-    if(st==='S'){h+=`<text x="${p.x}" y="${p.y+22}" text-anchor="middle" font-size="7" fill="#5F5E5A" font-family="Nunito,sans-serif">Start</text>`;}
-    if(st==='F'){h+=`<text x="${p.x}" y="${p.y+22}" text-anchor="middle" font-size="7" fill="#5F5E5A" font-family="Nunito,sans-serif">Home</text>`;}
-  });
-  const leg=[{c:'#378ADD',l:'A = Action'},{c:'#BA7517',l:'! = Event'},{c:'#1D9E75',l:'Start'},{c:'#D85A30',l:'Home'}];
-  leg.forEach((li,i)=>{h+=`<rect x="392" y="${18+i*16}" width="8" height="8" rx="2" fill="${li.c}"/><text x="404" y="${26+i*16}" font-size="8" fill="#888780" font-family="Nunito,sans-serif">${li.l}</text>`;});
-  svg.innerHTML=h;drawTokens();
-}
-function drawTokens(){
-  const svg=document.getElementById('bsvg');
-  svg.querySelectorAll('.tok').forEach(e=>e.remove());
-  const wpts=getWPts().slice(0,TOTAL);
-  const off=[{dx:-8,dy:-8},{dx:8,dy:-8},{dx:-8,dy:8},{dx:8,dy:8},{dx:0,dy:-11}];
-  for(let i=0;i<numP;i++){
-    const p=wpts[pos[i]],o=off[i%5],g=document.createElementNS('http://www.w3.org/2000/svg','g');
-    g.setAttribute('class','tok');
-    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-    c.setAttribute('cx',p.x+o.dx);c.setAttribute('cy',p.y+o.dy);c.setAttribute('r','6.5');
-    c.setAttribute('fill',players[i].color);c.setAttribute('stroke','#fff');c.setAttribute('stroke-width','1.5');
-    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
-    t.setAttribute('x',p.x+o.dx);t.setAttribute('y',p.y+o.dy+3);t.setAttribute('text-anchor','middle');
-    t.setAttribute('font-size','6.5');t.setAttribute('font-weight','700');t.setAttribute('fill','#fff');
-    t.setAttribute('font-family','Nunito,sans-serif');t.textContent=(i+1);
-    g.appendChild(c);g.appendChild(t);svg.appendChild(g);
-  }
+function selP(n,el){
+  numP=n;
+  document.querySelectorAll('.ptag').forEach((t,i)=>{const c=PCOLS[i];t.style.background='';t.style.color=c;t.style.borderColor=c;});
+  el.style.background=PCOLS[n-2];el.style.color='#fff';el.style.borderColor=PCOLS[n-2];
 }
 function setPhase(n){
   phase=n;
-  ['ph1','ph2','ph3'].forEach((id,i)=>{const el=document.getElementById(id);el.classList.remove('active','done');if(i+1<n)el.classList.add('done');else if(i+1===n)el.classList.add('active');});
+  ['ph1','ph2','ph3'].forEach((id,i)=>{
+    const el=document.getElementById(id);el.classList.remove('active','done');
+    if(i+1<n)el.classList.add('done');else if(i+1===n)el.classList.add('active');
+  });
   document.getElementById('rollbtn').disabled=(n!==1||rolled);
 }
-function updateTurnUI(){const p=players[curP];const tp=document.getElementById('tpill');tp.style.background=p.bg;tp.style.color=p.color;tp.textContent=TX[lang].turnIs.replace('{n}',curP+1);}
-function updateScoreUI(){document.getElementById('sclist').innerHTML=players.map((p,i)=>`<div class="srow${i===curP?' cur':''}" style="${i===curP?`border:1.5px solid ${p.color}`:''}"><div class="sdot" style="background:${p.color}"></div><span class="sname" style="color:${p.color}">${lang==='th'?PTH[i]:PEN[i]}</span><span class="spts">${pts[i]}pt</span></div>`).join('');}
+function updateTurnUI(){
+  const p=players[curP];
+  const tp=document.getElementById('tpill');
+  tp.style.background=p.bg;tp.style.color=p.color;
+  tp.textContent=TX[lang].turnIs.replace('{n}',curP+1);
+}
+function updateScoreUI(){
+  document.getElementById('sclist').innerHTML=players.map((p,i)=>
+    `<div class="srow${i===curP?' cur':''}" style="${i===curP?`border:1.5px solid ${p.color}`:''}">
+      <div class="sdot" style="background:${p.color}"></div>
+      <span class="sname" style="color:${p.color}">${lang==='th'?PTH[i]:PEN[i]}</span>
+      <span class="spts">${pts[i]}pt</span>
+    </div>`).join('');
+}
+
+// ─── GAME START ───────────────────────────────────────────────
+function startGame(){
+  genST();
+  players=[];pos=[];pts=[];skipNxt=[];
+  for(let i=0;i<numP;i++){
+    players.push({en:PEN[i],th:PTH[i],color:PCOLS[i],bg:PBGS[i]});
+    pos.push(0);pts.push(0);skipNxt.push(false);
+  }
+  curP=0;rolled=false;phase=1;gameOn=true;
+  document.getElementById('sscreen').classList.add('hidden');
+  document.getElementById('gscreen').classList.remove('hidden');
+  applyTX();
+  drawBoard();
+  updateTurnUI();updateScoreUI();setPhase(1);
+  document.getElementById('actbox').textContent=TX[lang].pActCard;
+}
+
+// ─── DICE & MOVEMENT ──────────────────────────────────────────
 function rollDice(){
-  if(rolled||phase!==1)return;rolled=true;
+  if(rolled||phase!==1||animating)return;
+  rolled=true;
   const d1=document.getElementById('d1'),d2=document.getElementById('d2');
-  d1.classList.add('spin');d2.classList.add('spin');document.getElementById('rollbtn').disabled=true;
+  d1.classList.add('spin');d2.classList.add('spin');
+  document.getElementById('rollbtn').disabled=true;
   setTimeout(()=>{
-    const v1=Math.floor(Math.random()*6)+1,v2=Math.floor(Math.random()*6)+1;
-    d1.textContent=DF[v1-1];d2.textContent=DF[v2-1];d1.classList.remove('spin');d2.classList.remove('spin');
-    document.getElementById('dtot').textContent='Total: '+(v1+v2);movePlayer(v1+v2);
+    const v1=Math.floor(Math.random()*6)+1, v2=Math.floor(Math.random()*6)+1;
+    d1.textContent=DF[v1-1];d2.textContent=DF[v2-1];
+    d1.classList.remove('spin');d2.classList.remove('spin');
+    document.getElementById('dtot').textContent='Total: '+(v1+v2);
+    doMove(v1+v2);
   },500);
 }
-function movePlayer(steps){
+
+function doMove(steps){
   const tx=TX[lang];
-  if(skipNxt[curP]){skipNxt[curP]=false;document.getElementById('actbox').textContent=tx.skipMsg;setTimeout(()=>nextTurn(),1600);return;}
-  pos[curP]=Math.min(TOTAL-1,pos[curP]+steps);drawTokens();
-  document.getElementById('actbox').textContent=tx.rolled.replace('{n}',pos[curP]);
-  if(pos[curP]>=TOTAL-1){setTimeout(()=>showWin(),800);return;}
-  setTimeout(()=>{STYPES[pos[curP]]==='E'?showEvent():showActionCard();},700);
+  if(skipNxt[curP]){
+    skipNxt[curP]=false;
+    document.getElementById('actbox').textContent=tx.skipMsg;
+    setTimeout(()=>nextTurn(),1600);return;
+  }
+  const fromTile=pos[curP];
+  const toTile=Math.min(TOTAL-1, fromTile+steps);
+  document.getElementById('actbox').textContent=tx.rolled.replace('{n}',toTile);
+
+  walkToken(curP, fromTile, toTile - fromTile, ()=>{
+    if(pos[curP]>=TOTAL-1){setTimeout(()=>showWin(),500);return;}
+    const st=STYPES[pos[curP]];
+    setTimeout(()=>{ st==='E'?showEvent():showActionCard(); },300);
+  });
 }
+
+// ─── CARDS ────────────────────────────────────────────────────
 function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
 function showActionCard(){
-  setPhase(1);const tx=TX[lang];const card=rnd(ACARDS);const c=card[lang];const exp=lang==='en'?card.en_exp:card.th_exp;
+  setPhase(1);
+  const tx=TX[lang];
+  const card=rnd(ACARDS);const c=card[lang];const exp=lang==='en'?card.en_exp:card.th_exp;
   const pn=lang==='th'?players[curP].th:PEN[curP];
-  const mv=c.adv>0?`<div style="padding:7px 11px;border-radius:10px;background:#EAF3DE;border-left:3px solid #639922;font-size:12px;font-weight:700;color:#27500A;margin-bottom:10px">${tx.advBy.replace('{n}',c.adv)}</div>`:`<div style="padding:7px 11px;border-radius:10px;background:#FAEEDA;border-left:3px solid #BA7517;font-size:12px;font-weight:700;color:#633806;margin-bottom:10px">${tx.stopHere}</div>`;
-  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal"><span class="badge" style="background:#E6F1FB;color:#0C447C">${tx.typeA}</span><div class="mq" style="font-style:italic">"${c.t}"</div>${mv}<div class="pt-box"><div class="pt-title">${tx.ptTitle}</div><div class="pt-step"><div class="snum">1</div><div class="pt-text"><b>${pn}</b> — ${tx.pt1}</div></div><div class="pt-step"><div class="snum">2</div><div class="pt-text">${tx.pt2}</div></div><div class="pt-step"><div class="snum">3</div><div class="pt-text">${tx.pt3}</div></div><div class="pt-step"><div class="snum">4</div><div class="pt-text">${tx.pt4}</div></div></div><div class="explain-box">${exp}</div><div class="mfooter"><button class="btn" onclick="applyAction(${c.adv})">${tx.pQCard} &rarr;</button></div></div></div>`;
+  const mv=c.adv>0
+    ?`<div style="padding:7px 11px;border-radius:var(--r);background:var(--green-l);border-left:3px solid var(--green);font-size:12px;font-weight:600;color:var(--green-d);margin-bottom:10px">${tx.advBy.replace('{n}',c.adv)}</div>`
+    :`<div style="padding:7px 11px;border-radius:var(--r);background:var(--amber-l);border-left:3px solid var(--amber);font-size:12px;font-weight:600;color:var(--amber-d);margin-bottom:10px">${tx.stopHere}</div>`;
+  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal">
+    <span class="badge" style="background:var(--blue-l);color:var(--blue-d)">${tx.typeA}</span>
+    <div class="mq" style="font-style:italic">"${c.t}"</div>
+    ${mv}
+    <div class="pt-box">
+      <div class="pt-title">${tx.ptTitle}</div>
+      <div class="pt-step"><div class="snum">1</div><div class="pt-text"><b>${pn}</b> — ${tx.pt1}</div></div>
+      <div class="pt-step"><div class="snum">2</div><div class="pt-text">${tx.pt2}</div></div>
+      <div class="pt-step"><div class="snum">3</div><div class="pt-text">${tx.pt3}</div></div>
+      <div class="pt-step"><div class="snum">4</div><div class="pt-text">${tx.pt4}</div></div>
+    </div>
+    <div class="explain-box">${exp}</div>
+    <div class="mfooter"><button class="btn" onclick="applyAction(${c.adv})">${tx.pQCard} &rarr;</button></div>
+  </div></div>`;
 }
-function applyAction(n){if(n>0){pos[curP]=Math.min(TOTAL-1,pos[curP]+n);drawTokens();}document.getElementById('mc').innerHTML='';if(pos[curP]>=TOTAL-1){showWin();return;}setPhase(2);document.getElementById('actbox').textContent=TX[lang].pQCard;showQCard();}
+
+function applyAction(n){
+  if(n>0){
+    const from=pos[curP];
+    const to=Math.min(TOTAL-1,from+n);
+    document.getElementById('mc').innerHTML='';
+    walkToken(curP,from,to-from,()=>{
+      if(pos[curP]>=TOTAL-1){showWin();return;}
+      setPhase(2);document.getElementById('actbox').textContent=TX[lang].pQCard;
+      setTimeout(showQCard,200);
+    });
+  } else {
+    document.getElementById('mc').innerHTML='';
+    setPhase(2);document.getElementById('actbox').textContent=TX[lang].pQCard;
+    showQCard();
+  }
+}
+
 function showQCard(){
   const tx=TX[lang];const card=rnd(QCARDS);const c=card[lang];const exp=lang==='en'?card.en_exp:card.th_exp;
-  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal"><span class="badge" style="background:#EEEDFE;color:#3C3489">${tx.typeQ}</span><div class="mq">${c.q}</div><div class="choices">${c.opts.map((o,i)=>`<button class="ch" onclick="ansQ(${i},${c.ans},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div><div id="qexp" class="explain-box hidden">${exp}</div><div class="mfooter"><button class="btn" id="qnxt" onclick="toGift()" style="display:none">${tx.pGiftCard} &rarr;</button><button class="btng" id="qskip" onclick="skipGift()" style="display:none">${tx.nextTurn}</button></div></div></div>`;
+  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal">
+    <span class="badge" style="background:var(--purple-l);color:var(--purple-d)">${tx.typeQ}</span>
+    <div class="mq">${c.q}</div>
+    <div class="choices">${c.opts.map((o,i)=>`<button class="ch" onclick="ansQ(${i},${c.ans},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+    <div id="qexp" class="explain-box hidden">${exp}</div>
+    <div class="mfooter">
+      <button class="btn" id="qnxt" onclick="toGift()" style="display:none">${tx.pGiftCard} &rarr;</button>
+      <button class="btng" id="qskip" onclick="skipGift()" style="display:none">${tx.nextTurn}</button>
+    </div>
+  </div></div>`;
 }
-function ansQ(chosen,correct,btn){
+
+function ansQ(chosen,correct){
   const chs=document.querySelectorAll('.ch');if(chs[0].disabled)return;
   chs.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('ok');else if(i===chosen&&chosen!==correct)b.classList.add('no');});
   document.getElementById('qexp').classList.remove('hidden');
   if(chosen===correct)document.getElementById('qnxt').style.display='inline-block';
   else document.getElementById('qskip').style.display='inline-block';
 }
+
 function toGift(){document.getElementById('mc').innerHTML='';setPhase(3);document.getElementById('actbox').textContent=TX[lang].pGiftCard;showGift();}
 function skipGift(){document.getElementById('mc').innerHTML='';nextTurn();}
+
 function showGift(){
   const tx=TX[lang];const gift=rnd(GIFT_POOL);const gname=lang==='th'?gift.th:gift.en;
-  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal" style="text-align:center"><span class="badge" style="background:#FAEEDA;color:#633806">${tx.typeG}</span><p style="font-size:12px;color:#888780;margin-bottom:12px">${tx.giftFlip}</p><div class="gift-card" id="gcard" onclick="revealGift('${gname.replace(/'/g,"\\'")}',${gift.pts},'${gift.icon}','${gift.col}','${gift.bg}','${gift.bdr||gift.col}','${gift.fortune||''}',${gift.fn||0})"><div style="font-size:52px">🎁</div><div style="font-size:12px;color:#888780;margin-top:6px">${tx.giftFlip}</div></div><div class="mfooter" style="justify-content:center" id="gfooter"></div></div></div>`;
+  const safe=gname.replace(/'/g,"\\'");
+  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal" style="text-align:center">
+    <span class="badge" style="background:var(--amber-l);color:var(--amber-d)">${tx.typeG}</span>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:12px">${tx.giftFlip}</p>
+    <div class="gift-card" id="gcard" onclick="revealGift('${safe}',${gift.pts},'${gift.icon}','${gift.col}','${gift.bg}','${gift.bdr||gift.col}','${gift.fortune||''}',${gift.fn||0})">
+      <div style="font-size:52px">🎁</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:4px">${tx.giftFlip}</div>
+    </div>
+    <div class="mfooter" style="justify-content:center" id="gfooter"></div>
+  </div></div>`;
 }
+
 function revealGift(name,gpts,icon,col,bg,bdr,fortune,fn){
   const tx=TX[lang];const card=document.getElementById('gcard');if(!card)return;
   let msg='';
   if(fortune){
-    if(fortune==='fwd'){pos[curP]=Math.min(TOTAL-1,pos[curP]+fn);drawTokens();msg=tx.evFwd.replace('{n}',fn);}
-    else if(fortune==='bwd'){pos[curP]=Math.max(0,pos[curP]-fn);drawTokens();msg=tx.evBwd.replace('{n}',fn);}
-    else if(fortune==='bonus'){pts[curP]+=1;updateScoreUI();msg=lang==='en'?'+1 bonus point!':'+1 คะแนนโบนัส!';}
-    else{msg=lang==='en'?'Nothing happens — keep going!':'ไม่มีอะไรเกิดขึ้น — เดินต่อ!';}
+    if(fortune==='fwd'){
+      const from=pos[curP];const to=Math.min(TOTAL-1,from+fn);
+      msg=tx.evFwd.replace('{n}',fn);
+      card.style.background=bg;card.style.borderColor=bdr;card.style.cursor='default';
+      card.innerHTML=`<div style="font-size:40px;color:${col}">${icon}</div><div style="font-size:15px;font-weight:700;color:${col};margin:4px 0">${name}</div><div style="font-size:18px;font-weight:700;color:${col}">${msg}</div>`;
+      document.getElementById('gfooter').innerHTML=`<button class="btn" onclick="fortuneWalk(${from},${to-from})">${tx.nextTurn}</button>`;
+      return;
+    } else if(fortune==='bwd'){
+      const from=pos[curP];const to=Math.max(0,from-fn);
+      msg=tx.evBwd.replace('{n}',fn);
+      card.style.background=bg;card.style.borderColor=bdr;card.style.cursor='default';
+      card.innerHTML=`<div style="font-size:40px;color:${col}">${icon}</div><div style="font-size:15px;font-weight:700;color:${col};margin:4px 0">${name}</div><div style="font-size:18px;font-weight:700;color:${col}">${msg}</div>`;
+      document.getElementById('gfooter').innerHTML=`<button class="btn" onclick="fortuneWalkBack(${from},${from-to})">${tx.nextTurn}</button>`;
+      return;
+    } else if(fortune==='bonus'){
+      pts[curP]+=1;updateScoreUI();msg=lang==='en'?'+1 bonus point!':'+1 คะแนนโบนัส!';
+    } else {
+      msg=lang==='en'?'Nothing happens — keep going!':'ไม่มีอะไรเกิดขึ้น — เดินต่อ!';
+    }
   } else {pts[curP]+=gpts;updateScoreUI();}
   card.style.background=bg;card.style.borderColor=bdr;card.style.cursor='default';
-  card.innerHTML=`<div style="font-size:44px;color:${col}">${icon}</div><div style="font-size:16px;font-weight:800;color:${col};margin:5px 0">${name}</div><div style="font-size:22px;font-weight:800;color:${col}">${fortune?msg:'+'+gpts+' '+tx.pts}</div>`;
+  card.innerHTML=`<div style="font-size:40px;color:${col}">${icon}</div><div style="font-size:15px;font-weight:700;color:${col};margin:4px 0">${name}</div><div style="font-size:18px;font-weight:700;color:${col}">${fortune?msg:'+'+gpts+' '+tx.pts}</div>`;
   document.getElementById('gfooter').innerHTML=`<button class="btn" onclick="afterGift()">${tx.nextTurn}</button>`;
 }
+
+function fortuneWalk(from,steps){
+  document.getElementById('mc').innerHTML='';
+  walkToken(curP,from,steps,()=>{
+    if(pos[curP]>=TOTAL-1){showWin();return;}
+    nextTurn();
+  });
+}
+
+function fortuneWalkBack(from,steps){
+  // walk backward: manually step back
+  document.getElementById('mc').innerHTML='';
+  animating=true;
+  let cur=from;
+  let rem=steps;
+  function stepBack(){
+    if(rem<=0){
+      bounceToken(curP,()=>{animating=false;nextTurn();});return;
+    }
+    cur=Math.max(0,cur-1);pos[curP]=cur;
+    moveTokenSVG(curP,cur,()=>{rem--;setTimeout(stepBack,30);});
+  }
+  stepBack();
+}
+
 function afterGift(){document.getElementById('mc').innerHTML='';if(pos[curP]>=TOTAL-1){showWin();return;}nextTurn();}
+
 function showEvent(){
   const tx=TX[lang];const ev=rnd(EVENTS);const e=ev[lang];
   const ec=e.effect==='fwd'?'#1D9E75':e.effect==='bwd'?'#D85A30':'#BA7517';
   const eb=e.effect==='fwd'?'#EAF3DE':e.effect==='bwd'?'#FCEBEB':'#FAEEDA';
   const et=e.effect==='fwd'?tx.evFwd.replace('{n}',e.n):e.effect==='bwd'?tx.evBwd.replace('{n}',e.n):tx.evSkip;
-  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal"><span class="badge" style="background:#FAEEDA;color:#633806">${tx.typeE}</span><div style="font-size:36px;text-align:center;margin-bottom:8px">${e.icon}</div><div class="mq" style="text-align:center">${e.title}</div><div style="font-size:13px;text-align:center;color:#5F5E5A;margin-bottom:10px;line-height:1.5">${e.body}</div><div style="text-align:center;padding:9px;background:${eb};border-radius:10px;font-size:13px;font-weight:700;color:${ec};margin-bottom:12px">${et}</div><div class="mfooter"><button class="btn" onclick="applyEv('${e.effect}',${e.n})">${tx.close}</button></div></div></div>`;
+  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal">
+    <span class="badge" style="background:var(--amber-l);color:var(--amber-d)">${tx.typeE}</span>
+    <div style="font-size:36px;text-align:center;margin-bottom:8px">${e.icon}</div>
+    <div class="mq" style="text-align:center">${e.title}</div>
+    <div style="font-size:13px;text-align:center;color:var(--text2);margin-bottom:10px;line-height:1.5">${e.body}</div>
+    <div style="text-align:center;padding:9px;background:${eb};border-radius:var(--r);font-size:13px;font-weight:600;color:${ec};margin-bottom:12px">${et}</div>
+    <div class="mfooter"><button class="btn" onclick="applyEv('${e.effect}',${e.n})">${tx.close}</button></div>
+  </div></div>`;
 }
+
 function applyEv(effect,n){
-  if(effect==='fwd')pos[curP]=Math.min(TOTAL-1,pos[curP]+n);else if(effect==='bwd')pos[curP]=Math.max(0,pos[curP]-n);else skipNxt[curP]=true;
-  drawTokens();document.getElementById('mc').innerHTML='';
-  if(pos[curP]>=TOTAL-1){showWin();return;}setPhase(2);document.getElementById('actbox').textContent=TX[lang].pQCard;showQCard();
+  document.getElementById('mc').innerHTML='';
+  const from=pos[curP];
+  if(effect==='skip'){skipNxt[curP]=true;setPhase(2);document.getElementById('actbox').textContent=TX[lang].pQCard;setTimeout(showQCard,200);return;}
+  if(effect==='fwd'){
+    const to=Math.min(TOTAL-1,from+n);
+    walkToken(curP,from,to-from,()=>{
+      if(pos[curP]>=TOTAL-1){showWin();return;}
+      setPhase(2);document.getElementById('actbox').textContent=TX[lang].pQCard;setTimeout(showQCard,200);
+    });
+  } else {
+    const to=Math.max(0,from-n);
+    animating=true;let cur=from;let rem=from-to;
+    function stepBack(){if(rem<=0){bounceToken(curP,()=>{animating=false;setPhase(2);document.getElementById('actbox').textContent=TX[lang].pQCard;setTimeout(showQCard,200);});return;}cur=Math.max(0,cur-1);pos[curP]=cur;moveTokenSVG(curP,cur,()=>{rem--;setTimeout(stepBack,30);});}
+    stepBack();
+  }
 }
+
 function nextTurn(){curP=(curP+1)%numP;rolled=false;setPhase(1);updateTurnUI();updateScoreUI();document.getElementById('actbox').textContent=TX[lang].pActCard;}
+
 function showWin(){
   const tx=TX[lang];const wi=pts.indexOf(Math.max(...pts));
-  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal" style="text-align:center"><div style="font-size:52px;margin-bottom:8px">🏆</div><div style="font-size:20px;font-weight:800;margin-bottom:6px">${tx.winTitle}</div><div style="font-size:18px;font-weight:800;color:${players[wi].color};margin-bottom:16px">${tx.winner.replace('{name}',lang==='th'?PTH[wi]:PEN[wi]).replace('{n}',pts[wi])}</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#888780;margin-bottom:8px">${tx.finalScores}</div><div style="display:flex;flex-direction:column;gap:5px;margin-bottom:18px">${players.map((p,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 12px;border-radius:10px;background:${p.bg};color:${p.color}"><span style="font-weight:700">${lang==='th'?PTH[i]:PEN[i]}</span><span style="font-weight:800">${pts[i]} pts</span></div>`).join('')}</div><button class="btn" onclick="resetGame()">${tx.playAgain}</button></div></div>`;
+  document.getElementById('mc').innerHTML=`<div class="modal-wrap"><div class="modal" style="text-align:center">
+    <div style="font-size:52px;margin-bottom:8px">🏆</div>
+    <div style="font-size:20px;font-weight:700;margin-bottom:6px">${tx.winTitle}</div>
+    <div style="font-size:18px;font-weight:700;color:${players[wi].color};margin-bottom:16px">${tx.winner.replace('{name}',lang==='th'?PTH[wi]:PEN[wi]).replace('{n}',pts[wi])}</div>
+    <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px">${tx.finalScores}</div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:18px">
+      ${players.map((p,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 12px;border-radius:var(--r);background:${p.bg};color:${p.color}"><span style="font-weight:600">${lang==='th'?PTH[i]:PEN[i]}</span><span style="font-weight:700">${pts[i]} pts</span></div>`).join('')}
+    </div>
+    <button class="btn" onclick="resetGame()">${tx.playAgain}</button>
+  </div></div>`;
 }
-function resetGame(){gameOn=false;document.getElementById('mc').innerHTML='';document.getElementById('gscreen').classList.add('hidden');document.getElementById('sscreen').classList.remove('hidden');document.getElementById('d1').textContent=DF[0];document.getElementById('d2').textContent=DF[0];document.getElementById('dtot').textContent='Total: 2';}
+
+function resetGame(){
+  gameOn=false;animating=false;
+  document.getElementById('mc').innerHTML='';
+  document.getElementById('gscreen').classList.add('hidden');
+  document.getElementById('sscreen').classList.remove('hidden');
+  document.getElementById('d1').textContent=DF[0];
+  document.getElementById('d2').textContent=DF[0];
+  document.getElementById('dtot').textContent='Total: 2';
+}
+
+// init
 selP(2,document.getElementById('p2'));
 </script>
 </body>
