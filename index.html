@@ -175,7 +175,7 @@ footer{text-align:center;padding:14px;font-size:11px;color:var(--text3);margin-t
   <div id="gscreen" class="hidden">
     <div class="game-grid">
       <div style="display:flex;flex-direction:column;gap:8px">
-        <div class="card" style="padding:10px">
+        <div class="card" style="padding:10px;overflow-x:auto">
           <div class="phase-bar">
             <div class="ph active" id="ph1">1. Roll</div>
             <div class="ph" id="ph2">2. Question</div>
@@ -723,6 +723,7 @@ function drawBoard(){
   const dpr=window.devicePixelRatio||1;
   canvas.width=CW*dpr; canvas.height=CH*dpr;
   canvas.style.width=CW+'px'; canvas.style.height=CH+'px';
+  wrap.style.width=CW+'px';
   wrap.style.height=CH+'px';
 
   const ctx=canvas.getContext('2d');
@@ -900,7 +901,20 @@ function walkBack(playerIdx,fromTile,steps,onComplete){
   function stepOnce(){
     if(rem<=0){
       stopWalkAnim(playerIdx);
-      animating=false;onComplete();return;
+      // ── Bounce: use SVG transformation on a nested bounce-group ──
+      const g=document.getElementById(`tok-${playerIdx}`);
+      if(g){
+        const bounceG=g.querySelector('.bounce-wrap');
+        if(bounceG){
+          // up
+          bounceG.setAttribute('transform','translate(0,-7)');
+          setTimeout(()=>{
+            bounceG.setAttribute('transform','translate(0,0)');
+            setTimeout(()=>{animating=false;onComplete();},110);
+          },130);
+        } else {animating=false;onComplete();}
+      } else {animating=false;onComplete();}
+      return;
     }
     cur=Math.max(0,cur-1);
     pos[playerIdx]=cur;
@@ -917,6 +931,10 @@ function walkBack(playerIdx,fromTile,steps,onComplete){
 const TX={
 en:{
   hsub:"Diabetes Education Board Game",lpl:"Number of players",sbtn:"Next: Choose characters →",lhow:"How to play",
+  rulesBody:`<b style="color:#1D9E75">Phase 1 — Roll & Action card:</b> Roll 2 dice, watch your character walk tile by tile. Draw an action card — read aloud, discuss, full explanation shows.<br>
+        <b style="color:#7F77DD">Phase 2 — Question card:</b> Answer a diabetes question. Explanation always shows after — right or wrong.<br>
+        <b style="color:#BA7517">Phase 3 — Gift draw:</b> Answer correctly — flip a mystery gift card for points!<br>
+        Most points when someone reaches Home wins!`,
   lcharsel:"Choose characters & enter names",lcharselSub:"Select a character for each player, then type their name",
   lcharpool:"Character roster",lplayers:"Players",startBtn:"▶ Start game",backBtn:"← Back",
   lturn:"Current turn",lsc:"Scoreboard",ldice:"Roll dice",lreset:"↩ New game",lact:"What to do now",
@@ -936,6 +954,10 @@ en:{
 },
 th:{
   hsub:"เกมการศึกษาโรคเบาหวาน",lpl:"จำนวนผู้เล่น",sbtn:"ถัดไป: เลือกตัวละคร →",lhow:"วิธีเล่น",
+  rulesBody:`<b style="color:#1D9E75">ขั้นตอนที่ 1 — ทอยและบัตรกิจกรรม:</b> ทอยลูกเต๋า 2 ลูก และดูตัวละครเดินทีละช่อง จั่วบัตรกิจกรรม — อ่านออกเสียง อภิปราย และดูคำอธิบายฉบับเต็ม<br>
+        <b style="color:#7F77DD">ขั้นตอนที่ 2 — บัตรคำถาม:</b> ตอบคำถามเกี่ยวกับโรคเบาหวาน จะมีการแสดงคำอธิบายหลังตอบทุกครั้ง ไม่ว่าจะตอบถูกหรือผิด<br>
+        <b style="color:#BA7517">ขั้นตอนที่ 3 — จั่วของรางวัล:</b> หากตอบถูก — พลิกบัตรของรางวัลปริศนาเพื่อรับคะแนน!<br>
+        ใครมีคะแนนสูงสุดเมื่อมีคนถึงเส้นชัยเป็นผู้ชนะ!`,
   lcharsel:"เลือกตัวละครและกรอกชื่อ",lcharselSub:"เลือกตัวละครให้แต่ละผู้เล่น แล้วพิมพ์ชื่อ",
   lcharpool:"รายชื่อตัวละคร",lplayers:"ผู้เล่น",startBtn:"▶ เริ่มเกม",backBtn:"← ย้อนกลับ",
   lturn:"เทิร์นปัจจุบัน",lsc:"คะแนน",ldice:"ทอยลูกเต๋า",lreset:"↩ เริ่มใหม่",lact:"สิ่งที่ต้องทำ",
@@ -1012,6 +1034,7 @@ const EVENTS=[
 // ═══════════════════════════════════════════════════
 let lang='en',numP=2,players=[],pos=[],pts=[],skipNxt=[],curP=0,rolled=false,gameOn=false,phase=1;
 let charAssign=[null,null,null,null,null]; // charId per player slot
+let resizeTimer;
 
 // ═══════════════════════════════════════════════════
 // SETUP & CHARACTER SELECTION
@@ -1023,6 +1046,15 @@ function applyTX(){
   document.getElementById('hsub').textContent=tx.hsub;
   document.getElementById('lpl').textContent=tx.lpl;
   document.getElementById('sbtn').textContent=tx.sbtn;
+  document.getElementById('lhow').textContent=tx.lhow;
+  const rules = document.getElementById('rules-body');
+  if (rules) rules.innerHTML = tx.rulesBody;
+
+  // If on Character Selection screen, re-render it to update roster names
+  if (document.getElementById('cscreen').style.display === 'block') {
+    buildCharSelect();
+  }
+
   if(gameOn){
     document.getElementById('lturn').textContent=tx.lturn;
     document.getElementById('lsc').textContent=tx.lsc;
@@ -1344,6 +1376,7 @@ function showGift(){
 
 function revealGift(name,gpts,icon,col,bg,bdr,fortune,fn){
   const tx=TX[lang],card=document.getElementById('gcard');if(!card)return;
+  card.onclick = null; // Fix: prevent double clicking for infinite points
   let msg='';
   if(fortune){
     if(fortune==='fwd'){
@@ -1431,6 +1464,16 @@ function resetGame(){
 
 // INIT
 selP(2,document.getElementById('p2'));
+
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (gameOn) {
+      drawBoard();
+      drawTokens();
+    }
+  }, 250);
+});
 </script>
 </body>
 </html>
